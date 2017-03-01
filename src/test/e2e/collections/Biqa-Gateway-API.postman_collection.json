@@ -1,0 +1,161 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Biqa-Gateway-API",
+		"_postman_id": "f48a1aa0-d406-b709-59aa-15a244e2fe16",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "401 response code for auth required endpoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 401\"] = responseCode.code === 401;"
+					}
+				}
+			],
+			"request": {
+				"url": "{{gateway_url}}/v1/customer",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Auth error: No such user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"No such user\"] = responseCode.code === 401 && (JSON.parse(responseBody).idErrorMessage === \"auth.exception.no_user\");"
+					}
+				}
+			],
+			"request": {
+				"url": "{{gateway_url}}/v1/customer",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic bm90X2V4aXN0c191c2VyOjEyMw==",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"description": "Not exists user"
+			},
+			"response": []
+		},
+		{
+			"name": "Async API Gateway store in REST Api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "\nvar asyncGateway = JSON.parse(responseBody).asyncGateway;\ntests[\"Have async server URI\"] = responseCode.code === 200 && asyncGateway !== null;\ntests[\"Have valid async server URI\"] = (asyncGateway.startsWith(\"ws://\") || asyncGateway.startsWith(\"wss://\"));"
+					}
+				}
+			],
+			"request": {
+				"url": "{{gateway_url}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "X-Biqa-Request-Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "postman.clearEnvironmentVariable(\"requestId\");\nvar requestId = postman.getResponseHeader(\"X-Biqa-Request-Id\");\n\ntests[\"X-Biqa-Request-Id\"] = requestId;\npostman.setEnvironmentVariable(\"requestId\", requestId);\nconsole.log(requestId);"
+					}
+				}
+			],
+			"request": {
+				"url": "{{gateway_url}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Ensure X-Biqa-Request-Id is unique",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var requestId = postman.getResponseHeader(\"X-Biqa-Request-Id\");\nvar oldRequestId = postman.getEnvironmentVariable(\"requestId\");\ntests[\"Ensure X-Biqa-Request-Id is unique\"] = requestId !== oldRequestId;\nconsole.log(oldRequestId, requestId);"
+					}
+				}
+			],
+			"request": {
+				"url": "{{gateway_url}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

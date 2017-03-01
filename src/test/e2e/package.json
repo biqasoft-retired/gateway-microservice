@@ -1,0 +1,8 @@
+{
+  "name": "e2e-gateway-test",
+  "version": "1.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "newman": "^3.1.1"
+  }
+}

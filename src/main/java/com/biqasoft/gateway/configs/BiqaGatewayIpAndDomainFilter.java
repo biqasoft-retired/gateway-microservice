@@ -78,6 +78,14 @@ public class BiqaGatewayIpAndDomainFilter implements Filter {
         } else {
             // try auth http request param
             String authorizationFromHttpRequestParamAsHeader = GatewayAuthenticationProvider.getAuthorizationFromHttpRequestParamAsHeader(request);
+
+            if (authorizationFromHttpRequestParamAsHeader == null){
+                String authorization = ((HttpServletRequest) req).getHeader("Authorization");
+                if (!StringUtils.isEmpty(authorization) && authorization.startsWith("Biqa")){
+                    authorizationFromHttpRequestParamAsHeader = authorization;
+                }
+            }
+
             if (authorizationFromHttpRequestParamAsHeader != null) {
                 try {
                     gatewayAuthenticationProvider.authenticateUser(null, authorizationFromHttpRequestParamAsHeader, new WebAuthenticationDetails(request));
@@ -88,6 +96,7 @@ public class BiqaGatewayIpAndDomainFilter implements Filter {
                     return;
                 }
             }
+
         }
 
         chain.doFilter(req, res);

@@ -17,10 +17,7 @@ import com.biqasoft.gateway.useraccount.dto.OAuthTokenModificationRequestDTO;
 import com.biqasoft.microservice.common.MicroserviceOAuth2Applications;
 import com.biqasoft.microservice.common.MicroserviceOAuth2User;
 import com.biqasoft.microservice.common.MicroserviceUsersRepository;
-import com.biqasoft.microservice.common.dto.OAuth2MicroserviceNewCredentialsRequest;
-import com.biqasoft.microservice.common.dto.OAuth2MicroserviceNewTokenRequest;
-import com.biqasoft.microservice.common.dto.OAuth2NewTokenRequest;
-import com.biqasoft.microservice.common.dto.UserAccountOAuth2;
+import com.biqasoft.microservice.common.dto.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.http.client.utils.URIBuilder;
@@ -63,6 +60,23 @@ public class MyUserAccountController {
     @RequestMapping(value = "set_online", method = RequestMethod.GET)
     public void setOnline() {
         microserviceUsersRepository.setCurrentUserOnline();
+    }
+
+    @ApiOperation(value = "request secret code(may be rendered as QR code in UI) but do not enable auth")
+    @RequestMapping(value = "2step/request_secret_code", method = RequestMethod.POST)
+    public SecondFactorResponse twoStepAuthrequestSecretCode() {
+      return  microserviceUsersRepository.tryToAdd2StepAuth("");
+    }
+
+    @ApiOperation(value = "enable two step auth for current user")
+    @RequestMapping(value = "2step/enable", method = RequestMethod.POST)
+    public void enableTwoStepAuth(@RequestBody TwoStepModifyRequest twoStepModifyRequest) {
+        microserviceUsersRepository.modifyTwoStepAuth(true, twoStepModifyRequest.getCode());
+    }
+    @ApiOperation(value = "disable two step auth for current user")
+    @RequestMapping(value = "2step/disable", method = RequestMethod.POST)
+    public void disableTwoStepAuth() {
+        microserviceUsersRepository.modifyTwoStepAuth(false, null);
     }
 
     @ApiOperation(value = "set personal settings of current user")
@@ -150,4 +164,26 @@ public class MyUserAccountController {
         microserviceOAuth2User.deleteOauthTokenFromUserAccountById(currentUser.getCurrentUser().getId(), requestDto.getUsername());
     }
 
+}
+
+
+class TwoStepModifyRequest {
+    private boolean enabled;
+    private String code;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }

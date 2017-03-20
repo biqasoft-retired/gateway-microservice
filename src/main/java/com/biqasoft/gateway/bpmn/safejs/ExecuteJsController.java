@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +45,7 @@ public class ExecuteJsController {
     @Secured(value = {SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "execute/raw")
     @RequestMapping(value = "execute/raw", method = RequestMethod.POST)
-    public ExecuteJsResponse executeRawCode(HttpServletResponse response, @RequestBody String code) {
+    public ExecuteJsResponse executeRawCode(@RequestBody String code) {
         ExecuteJsRequest executeJsRequest = new ExecuteJsRequest();
         executeJsRequest.setJsCode(code);
 

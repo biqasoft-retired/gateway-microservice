@@ -34,7 +34,7 @@ public class CompanyController {
     @Secured({SYSTEM_ROLES.COMPANY_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all companies", notes = "preferred to use '/filter' method ")
     @RequestMapping(method = RequestMethod.GET)
-    public List<Company> getAllCompanies(HttpServletResponse response) {
+    public List<Company> getAllCompanies() {
         return companyRepository.findAll();
     }
 

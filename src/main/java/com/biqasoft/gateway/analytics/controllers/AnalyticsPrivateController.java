@@ -53,28 +53,28 @@ public class AnalyticsPrivateController {
     @Secured(value = {SYSTEM_ROLES.ANALYTIC_GET_COUNTERS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get web counter by id")
     @RequestMapping(value = "/counter/{id}", method = RequestMethod.GET)
-    public WebAnalyticsCounter getCounterById(HttpServletResponse response, @PathVariable("id") String id) {
+    public WebAnalyticsCounter getCounterById(@PathVariable("id") String id) {
         return analyticsRepository.findWebAnalyticsCounter(id);
     }
 
     @Secured(value = {SYSTEM_ROLES.ANALYTIC_GET_COUNTERS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all web counters")
     @RequestMapping(value = "/counters", method = RequestMethod.GET)
-    public List<WebAnalyticsCounter> getAllWebAnalyticsCounters(HttpServletResponse response) {
+    public List<WebAnalyticsCounter> getAllWebAnalyticsCounters() {
         return analyticsRepository.findAllAnalyticsCounters();
     }
 
     @Secured(value = {SYSTEM_ROLES.ANALYTIC_RECORDS_MAP_REDUCE_FILTERS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all analytic records form some counter by id")
     @RequestMapping(value = "/records_by_counter_id/all/{id}", method = RequestMethod.GET)
-    public List<AnalyticRecord> getAllAnalyticsRecordsByCounterId(HttpServletResponse response, @PathVariable("id") String id) {
+    public List<AnalyticRecord> getAllAnalyticsRecordsByCounterId(@PathVariable("id") String id) {
         return analyticsRepository.findAllAnalyticRecordsByCounterId(id);
     }
 
     @Secured(value = {SYSTEM_ROLES.ANALYTIC_RECORDS_MAP_REDUCE_FILTERS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all analytic records by some user(client/customer/lead) ID (cookie, email, telephone etc)")
     @RequestMapping(value = "/analytics_record/by_cookies_ids", method = RequestMethod.POST)
-    public List<AnalyticRecord> getAnalyticsRecordsByUserId(@RequestBody List<String> userCookies, HttpServletResponse response) {
+    public List<AnalyticRecord> getAnalyticsRecordsByUserId(@RequestBody List<String> userCookies) {
         return analyticsRepository.findAllAnalyticRecordsByCookiesIds(userCookies);
     }
 

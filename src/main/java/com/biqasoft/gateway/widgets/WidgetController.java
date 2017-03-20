@@ -31,7 +31,7 @@ public class WidgetController {
     @Secured(value = {SYSTEM_ROLES.WIDGET_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "update one widget")
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public  Widget updateWidget(@RequestBody Widget widget) {
+    public Widget updateWidget(@RequestBody Widget widget) {
         return widgetRepository.updateWidget(widget);
     }
 
@@ -45,7 +45,7 @@ public class WidgetController {
     @Secured(value = {SYSTEM_ROLES.WIDGET_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "add new widget")
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public  Widget addNewDashboard(@RequestBody Widget widget, HttpServletResponse response) {
+    public Widget addNewDashboard(@RequestBody Widget widget, HttpServletResponse response) {
         widgetRepository.addWidget(widget);
 
         response.setStatus(HttpServletResponse.SC_CREATED);
@@ -55,9 +55,8 @@ public class WidgetController {
     @Secured(value = {SYSTEM_ROLES.WIDGET_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get widget by id")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public  Widget addNewDashboard(@PathVariable("id") String id) {
-        Widget widget = widgetRepository.findWidgetById(id);
-        return widget;
+    public Widget addNewDashboard(@PathVariable("id") String id) {
+        return widgetRepository.findWidgetById(id);
     }
 
     @Secured(value = {SYSTEM_ROLES.WIDGET_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})

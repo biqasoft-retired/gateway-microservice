@@ -64,7 +64,7 @@ public class StorageController {
     @Secured(value = {SYSTEM_ROLES.DOCUMENTS_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all uploaded files and folders", notes = "only uploaded files and folders will be shown")
     @RequestMapping(method = RequestMethod.GET)
-    public List<StorageFile> getAllDocuments(HttpServletResponse response) {
+    public List<StorageFile> getAllDocuments() {
         StorageFileFilter builder = new StorageFileFilter();
         builder.setOnlyUploaded(true);
 
@@ -81,7 +81,7 @@ public class StorageController {
         }
         ExternalServiceToken externalServiceToken;
 
-        if (id.equals(DEFAULT_STORAGE)) {
+        if (DEFAULT_STORAGE.equals(id)) {
             if (StringUtils.isEmpty(path) || path.equals("undefined")) {
                 path = DOCUMENT_FILE.ROOT_FOLDER_NAME;
             }
@@ -97,14 +97,14 @@ public class StorageController {
     @Secured(value = {SYSTEM_ROLES.DOCUMENTS_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get document meta info by Id")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public StorageFile detailedDocumentFileInfo(HttpServletResponse response, @PathVariable("id") String id) {
+    public StorageFile detailedDocumentFileInfo(@PathVariable("id") String id) {
         return documentFileRepository.findStorageFileById(id);
     }
 
     @Secured(value = {SYSTEM_ROLES.DOCUMENTS_DOWNLOAD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get public URL of document by ID")
     @RequestMapping(value = "get_document_url_by_id/{id}", method = RequestMethod.GET)
-    public SampleDataResponse getDocumentURLById(HttpServletResponse response, @PathVariable("id") String id) {
+    public SampleDataResponse getDocumentURLById(@PathVariable("id") String id) {
         int ttl = this.defaultDirectLinkTTL;
         StorageFile documentFile = documentFileRepository.findStorageFileById(id);
 
@@ -118,7 +118,7 @@ public class StorageController {
     @Secured(value = {SYSTEM_ROLES.DOCUMENTS_DOWNLOAD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "delete file/folder")
     @RequestMapping(value = "delete", method = RequestMethod.POST)
-    public void deleteDocumentFile(@RequestBody StorageFile documentFile, HttpServletResponse response) {
+    public void deleteDocumentFile(@RequestBody StorageFile documentFile) {
         documentFileRepository.deleteDocumentFile(documentFile);
     }
 

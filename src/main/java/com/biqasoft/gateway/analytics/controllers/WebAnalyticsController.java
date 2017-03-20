@@ -37,7 +37,7 @@ public class WebAnalyticsController {
 
     @ApiOperation(value = "get main counter (pixel) to tracking user", notes = ", you should add this image to any page, when want to tack user actions")
     @RequestMapping(value = "/tp.jpg", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getNewAnalyticRecordImage(HttpServletResponse response, HttpServletRequest request,
+    public byte[] getNewAnalyticRecordImage(HttpServletRequest request,
                                             @RequestParam(value = "utm_source", required = false) String utm_source,
                                             @RequestParam(value = "utm_medium", required = false) String utm_medium,
                                             @RequestParam(value = "utm_campaign", required = false) String utm_campaign,
@@ -52,10 +52,6 @@ public class WebAnalyticsController {
                                             @RequestParam(value = "pathname", required = false) String pathname,
                                             @RequestParam(value = "fullUrl", required = false) String fullUrl,
                                             @RequestParam(value = "action", required = false) String action
-//            ,
-//                                      @RequestParam(value="utm_source"  ) String utm_source,
-//                                      @RequestParam(value="utm_source"  ) String utm_source,
-
     ) {
 
 //        {

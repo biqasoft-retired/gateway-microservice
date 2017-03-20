@@ -66,7 +66,7 @@ public class DataSourceController {
     @Secured(value = {SYSTEM_ROLES.DATA_SOURCES_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all datasources", notes = "NOT RESOLVED DATA !")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<DataSource> getAllDataSources(HttpServletResponse response) {
+    public List<DataSource> getAllDataSources() {
         return dataSourceAllData.findAllDataSourceSavedData();
     }
 
@@ -90,7 +90,7 @@ public class DataSourceController {
     @Secured(value = {SYSTEM_ROLES.DATA_SOURCES_ADD_METRIC_MANUALLY, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "manually add data source metric in timeline")
     @RequestMapping(value = "metrics/save_data_source_value", method = RequestMethod.POST)
-    public SavedDataSource getDataSourceByFilter(@RequestBody SavedDataSource builder, HttpServletResponse response) {
+    public SavedDataSource getDataSourceByFilter(@RequestBody SavedDataSource builder) {
         return dataSourceAllData.saveDataSourceMetric(builder);
     }
 

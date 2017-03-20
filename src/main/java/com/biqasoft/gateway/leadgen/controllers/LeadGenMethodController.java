@@ -81,8 +81,7 @@ public class LeadGenMethodController {
     @ApiOperation(value = "get sale method by ID and resolve sales funnel data sources")
     @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
     public LeadGenMethod getLeadGenMethodWithResolvedSalesFunnelStatuses(@PathVariable("id") String id) {
-        LeadGenMethod leadGenMethod = leadRepository.findLeadGenMethodById(id);
-        return leadGenMethod;
+        return leadRepository.findLeadGenMethodById(id);
     }
 
     @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_EXCEL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})

@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * Domain admin functions. for developers.
  * Public API
@@ -37,7 +35,7 @@ public class AdminController {
     @ApiOperation(value = "create new credentials for database in current domain")
     @RequestMapping(value = "database/credentials", method = RequestMethod.POST)
     public
-    DataBaseCredentialsDao getDatabaseCredentials(@RequestBody DataBaseCredentialsDao dataBaseCredentialsDao, HttpServletResponse response) {
+    DataBaseCredentialsDao getDatabaseCredentials(@RequestBody DataBaseCredentialsDao dataBaseCredentialsDao) {
         systemActionsRepository.createNewDataBaseUser(dataBaseCredentialsDao);
         return dataBaseCredentialsDao;
     }
@@ -45,21 +43,21 @@ public class AdminController {
     @ApiOperation(value = "get users in database")
     @RequestMapping(value = "database/users", method = RequestMethod.GET)
     public
-    CommandResult getAllUsersInDomainDataBase(HttpServletResponse response) {
+    CommandResult getAllUsersInDomainDataBase() {
         return systemActionsRepository.getAllUsersInDomainDataBase();
     }
 
     @ApiOperation(value = "delete user in database")
     @RequestMapping(value = "database/users/{id}", method = RequestMethod.DELETE)
     public
-    CommandResult dropUserInDataBase(HttpServletResponse response, @PathVariable("id") String id) {
+    CommandResult dropUserInDataBase(@PathVariable("id") String id) {
         return systemActionsRepository.dropUserInDomainDataBase(id);
     }
 
     @ApiOperation(value = "execute mongodb command for database in current domain")
     @RequestMapping(value = "database/command/execute", method = RequestMethod.POST)
     public
-    ExecuteDatabaseCommandResultDTO executeDatabaseCommand(@RequestBody ExecuteDatabaseCommandRequestDTO dataBaseCredentialsDao, HttpServletResponse response) {
+    ExecuteDatabaseCommandResultDTO executeDatabaseCommand(@RequestBody ExecuteDatabaseCommandRequestDTO dataBaseCredentialsDao) {
         return systemActionsRepository.executeDatabaseCommandAsUserAdmin(dataBaseCredentialsDao);
     }
 

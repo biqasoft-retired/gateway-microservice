@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Api(value = "KPIs")
@@ -59,7 +58,7 @@ public class IndicatorsController {
     @Secured(value = {SYSTEM_ROLES.KPI_LEAD_GEN_METHOD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get main KPIs of lead gen method or project")
     @RequestMapping(value = "filter/lead_gen_method/kpi", method = RequestMethod.POST)
-    public LeadGenAggregatedResponseFull getAggregatedLeadGenKPIs(@RequestBody LeadGenKPIsFilter builder, HttpServletResponse response) throws Exception {
+    public LeadGenAggregatedResponseFull getAggregatedLeadGenKPIs(@RequestBody LeadGenKPIsFilter builder) {
         boolean isLeadGenMethod = false;
         boolean isLeadGenProject = false;
         String id = null;
@@ -84,7 +83,7 @@ public class IndicatorsController {
     @Secured(value = {SYSTEM_ROLES.KPI_LEAD_GEN_METHOD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get main KPIs of data source")
     @RequestMapping(value = "filter/data_source/kpi/integer", method = RequestMethod.POST)
-    public DataSourceIntegerAggregatedResponseFull getAggregatedLeadGenKPIs(@RequestBody DataSourceKPIsFilter builder, HttpServletResponse response) throws Exception {
+    public DataSourceIntegerAggregatedResponseFull getAggregatedLeadGenKPIs(@RequestBody DataSourceKPIsFilter builder){
 
         if (builder.getDataSourceId() == null) {
             ThrowExceptionHelper.throwExceptionInvalidRequest("you cant set `dataSourceId` to null");
@@ -97,7 +96,7 @@ public class IndicatorsController {
     @Secured(value = {SYSTEM_ROLES.KPI_TASK, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get main KPIs of tasks")
     @RequestMapping(value = "tasks/today", method = RequestMethod.GET)
-    public List<DateGroupedStatisticsListEntity> getDateGroupedStatisticsListEntity(HttpServletResponse response) {
+    public List<DateGroupedStatisticsListEntity> getDateGroupedStatisticsListEntity() {
         return kpIsRepository.getGroupedTasksByDay(
                 taskRepository.findAll(),
                 dateServiceRequestContext.parseDateExpression(DATE_CONSTS.CURRENT_MONTH_START),
@@ -108,20 +107,20 @@ public class IndicatorsController {
     @Secured(value = {SYSTEM_ROLES.KPI_SALES_MANAGER, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get created info of customer and leads by CustomerBuilder", notes = "no side affect")
     @RequestMapping(value = "manager/kpis/created_leads_and_customers", method = RequestMethod.POST)
-    public List<ManagerCreatedCustomersEntity> getCustomerAndLeadsCreatedByManager(@RequestBody CustomerFilter customerCreatedBuilder, HttpServletResponse response) {
+    public List<ManagerCreatedCustomersEntity> getCustomerAndLeadsCreatedByManager(@RequestBody CustomerFilter customerCreatedBuilder) {
         return kpIsRepository.getCustomerAndLeadsCreatedByManager(customerCreatedBuilder);
     }
 
     @Secured(value = {SYSTEM_ROLES.KPI_SALES_MANAGER, SYSTEM_ROLES.ROLE_SELLER_MOTIVATION_DESK, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get payments by PaymentDealsBuilder. With motivation desk")
     @RequestMapping(value = "manager/payment/filter", method = RequestMethod.POST)
-    public List<ManagerPaymentEntity> paymentDealsByManagers(@RequestBody PaymentDealsFilter paymentDealsBuilder, HttpServletResponse response) {
+    public List<ManagerPaymentEntity> paymentDealsByManagers(@RequestBody PaymentDealsFilter paymentDealsBuilder) {
         return kpIsPaymentsRepository.getAllManagerPaymentDealsKPIs(paymentDealsBuilder);
     }
 
     @Secured(value = {SYSTEM_ROLES.STATS_DOMAIN_BASIC, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @RequestMapping(value = "basic_stats", method = RequestMethod.GET)
-    public BasicStatsDTO getBasicStats(HttpServletResponse response) {
+    public BasicStatsDTO getBasicStats() {
         return domainStatisticsRepository.getBasicStats();
     }
 

@@ -41,7 +41,8 @@ public class BiqaGatewayRequestFilter implements Filter {
         response.addHeader("Access-Control-Allow-Origin", request.getHeader("Origin")); // CORS, allow all use our API via Ajax
 
         // allow javascript client read this header
-        response.addHeader("Access-Control-Expose-Headers", SYSTEM_CONSTS.X_biqa_OBJECT_EQUALS_HASH_HEADER.concat(", " + SYSTEM_CONSTS.X_biqa_Version_Hash_HEADER));
+        // currently not implemented in ui and server
+//        response.addHeader("Access-Control-Expose-Headers", SYSTEM_CONSTS.X_biqa_OBJECT_EQUALS_HASH_HEADER.concat(", " + SYSTEM_CONSTS.X_biqa_Version_Hash_HEADER));
 
         // unique request ID
         response.addHeader(MICROSERVICE_REQUEST_ID_HEADER, MDC.get(REQUEST_ID_LOGGER));

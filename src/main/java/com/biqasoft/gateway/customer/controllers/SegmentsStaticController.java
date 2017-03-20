@@ -34,28 +34,28 @@ public class SegmentsStaticController {
     @Secured(value = {SYSTEM_ROLES.SEGMENT_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "Get all static segments ")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<StaticSegment> getAllStaticSegments(HttpServletResponse response) {
+    public List<StaticSegment> getAllStaticSegments() {
         return segmentsRepository.findAllStaticSegments();
     }
 
     @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get customers by static by id ")
     @RequestMapping(value = "{id}/customers", method = RequestMethod.GET)
-    public List<Customer> getAllCustomersByStaticSegment(HttpServletResponse response, @PathVariable("id") String id) {
+    public List<Customer> getAllCustomersByStaticSegment(@PathVariable("id") String id) {
         return segmentsRepository.getAllCustomersByStaticSegment(id);
     }
 
     @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get detailed info by static by id ")
     @RequestMapping(value = "{id}/stats", method = RequestMethod.GET)
-    public SegmentStats getStatsByStaticSegment(HttpServletResponse response, @PathVariable("id") String id) {
+    public SegmentStats getStatsByStaticSegment(@PathVariable("id") String id) {
         return segmentsRepository.getStatsByStaticSegmentId(id);
     }
 
     @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get static segment info by id ")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public StaticSegment getStaticSegmentMetaInfoById(HttpServletResponse response, @PathVariable("id") String id) {
+    public StaticSegment getStaticSegmentMetaInfoById(@PathVariable("id") String id) {
         return segmentsRepository.findStaticSegmentById(id);
     }
 

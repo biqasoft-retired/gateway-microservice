@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 @Api(value = "Health server")
@@ -36,7 +35,7 @@ public class RootController {
 
     @ApiOperation(value = "test server health")
     @RequestMapping(method = RequestMethod.GET)
-    public ServerHealth rootHealthCheck(HttpServletResponse response) {
+    public ServerHealth rootHealthCheck() {
         ServerHealth serverHealth = new ServerHealth();
         serverHealth.setStatus("OK");
         serverHealth.setServerVersion(gitCommitId);

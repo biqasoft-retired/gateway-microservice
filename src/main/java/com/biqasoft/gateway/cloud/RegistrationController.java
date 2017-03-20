@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,11 +62,10 @@ public class RegistrationController {
      * Create new domain and admin account on public registration landing page
      *
      * @param landingPageRequestDao
-     * @param response
      * @return
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public UserNameWithPassword publicRegisterNewUser(@RequestBody LandingPageRequestDTO landingPageRequestDao, HttpServletRequest request, HttpServletResponse response) {
+    public UserNameWithPassword publicRegisterNewUser(@RequestBody LandingPageRequestDTO landingPageRequestDao, HttpServletRequest request) {
         UserNameWithPassword landingPageResponseDao = new UserNameWithPassword();
 
         // user with same email already exist

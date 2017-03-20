@@ -32,21 +32,21 @@ public class ExternalServiceTokenController {
     @Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_GET_ALL_ACCOUNTS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all external accounts")
     @RequestMapping(value = "accounts", method = RequestMethod.GET)
-    public  List<ExternalServiceToken> getAllExternalAccounts(HttpServletResponse response) {
+    public  List<ExternalServiceToken> getAllExternalAccounts() {
         return externalServiceTokenRepository.findAll();
     }
 
     @Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_GET_ALL_ACCOUNTS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all yandex direct accounts")
     @RequestMapping(value = "accounts/yandex/direct", method = RequestMethod.GET)
-    public  List<ExternalServiceToken> getAllYandexDirectAccounts(HttpServletResponse response) {
+    public  List<ExternalServiceToken> getAllYandexDirectAccounts() {
         return externalServiceTokenRepository.findExternalServiceTokensByType(TOKEN_TYPES.YANDEX_DIRECT);
     }
 
     @Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_GET_ALL_ACCOUNTS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get external account by ID")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public  ExternalServiceToken findExternalServiceTokenById(HttpServletResponse response, @PathVariable("id") String id) {
+    public  ExternalServiceToken findExternalServiceTokenById(@PathVariable("id") String id) {
         return externalServiceTokenRepository.findExternalServiceTokenById(id);
     }
 

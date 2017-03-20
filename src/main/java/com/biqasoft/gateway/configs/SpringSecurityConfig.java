@@ -15,9 +15,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
@@ -49,7 +46,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll() // allow Ajax
 
-                .antMatchers("/health/**").permitAll() // spring actuator
                 .antMatchers("/v1/calendar/public/**").permitAll()
                 .antMatchers("/v1/constants/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/").permitAll() // root public health check
@@ -59,7 +55,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/public/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/public/**").permitAll()
                 .antMatchers("/v1/public/**").permitAll()
-                .antMatchers("/internal/**").hasRole("ROOT_USER")
+//                .antMatchers("/internal/**").hasRole("ROOT_USER")
+                .antMatchers("/internal/**").permitAll()
                 .antMatchers("/**").authenticated()
         .and()
         .httpBasic().authenticationEntryPoint(authExceptionHandler);

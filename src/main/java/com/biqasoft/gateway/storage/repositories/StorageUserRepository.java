@@ -78,8 +78,7 @@ public class StorageUserRepository {
             if (externalServiceToken == null){
                 ThrowExceptionHelper.throwExceptionInvalidRequestLocalized("storage.no_provider_name");
             }else{
-                S3CompatibleFileRepository s3CompatibleFileRepository = new S3CompatibleFileRepository(ops, defaultStorageService, externalServiceToken);
-                return s3CompatibleFileRepository;
+                return new S3CompatibleFileRepository(ops, defaultStorageService, externalServiceToken);
             }
         }
 
@@ -90,7 +89,7 @@ public class StorageUserRepository {
     }
 
     private StorageFileRepository getFileRepositoryByName(ExternalServiceToken token) {
-        StorageFileRepository repository = null;
+        StorageFileRepository repository;
         repository = allStorageProvidersMap.get(token.getType());
 
         if (token.getType().equals(S3_COMPATIBLE)){
@@ -99,8 +98,7 @@ public class StorageUserRepository {
             if (externalServiceToken == null){
                 ThrowExceptionHelper.throwExceptionInvalidRequestLocalized("storage.no_provider_name");
             }else{
-                S3CompatibleFileRepository s3CompatibleFileRepository = new S3CompatibleFileRepository(ops, defaultStorageService, externalServiceToken);
-                return s3CompatibleFileRepository;
+                return new S3CompatibleFileRepository(ops, defaultStorageService, externalServiceToken);
             }
         }
 

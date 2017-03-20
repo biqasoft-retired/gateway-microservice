@@ -31,7 +31,7 @@ public class CustomObjectsDataSegmentsController {
     @Secured(value = {SYSTEM_ROLES.CUSTOM_OBJECT_DATA_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "Get all segments ")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<CustomObjectDataSegment> getAllSegments(HttpServletResponse response) {
+    public List<CustomObjectDataSegment> getAllSegments() {
         return customObjectsDataSegmentsRepository.getAllSegments();
     }
 
@@ -62,7 +62,7 @@ public class CustomObjectsDataSegmentsController {
     @ApiOperation(value = "delete segment")
     @Secured(value = {SYSTEM_ROLES.CUSTOM_OBJECT_DATA_DELETE, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void deleteSegment(HttpServletResponse response, @PathVariable("id") String id) {
+    public void deleteSegment(@PathVariable("id") String id) {
         customObjectsDataSegmentsRepository.deleteSegment(id);
     }
 

@@ -5,17 +5,17 @@
 package com.biqasoft.gateway.storage.repositories;
 
 import com.biqasoft.entity.constants.TOKEN_TYPES;
-import com.biqasoft.entity.core.Domain;
-import com.biqasoft.storage.entity.StorageFile;
-import com.biqasoft.gateway.storage.dto.GoogleOauthResponseToken;
 import com.biqasoft.entity.core.CreatedInfo;
-import com.biqasoft.entity.system.ExternalServiceToken;
+import com.biqasoft.entity.core.CurrentUser;
+import com.biqasoft.entity.core.Domain;
 import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.entity.system.ExternalServiceToken;
 import com.biqasoft.gateway.externalservice.ExternalServiceTokenRepository;
+import com.biqasoft.gateway.storage.dto.GoogleOauthResponseToken;
 import com.biqasoft.microservice.communicator.http.HttpClientsHelpers;
 import com.biqasoft.storage.DefaultStorageService;
 import com.biqasoft.storage.StorageFileRepository;
-import com.biqasoft.entity.core.CurrentUser;
+import com.biqasoft.storage.entity.StorageFile;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.FileContent;
@@ -26,6 +26,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.FileList;
 import com.google.api.services.drive.model.ParentReference;
+import org.javers.common.collections.Sets;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayOutputStream;
@@ -41,11 +43,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Google Drive
  * Storage Integration
- *
+ * <p>
  * <p>
  * {@code https://security.google.com/settings/security/permissions}
  * {@code https://developers.google.com/drive/v2/reference/parents/get}
@@ -121,7 +124,7 @@ public class GoogleDriveStorageRepository implements StorageFileRepository {
 
     @Override
     public String processListingPath(String path) {
-        if (path == null || path.equals("")) path = "/";
+        if (StringUtils.isEmpty(path)) path = "/";
         return path;
     }
 
@@ -154,7 +157,6 @@ public class GoogleDriveStorageRepository implements StorageFileRepository {
     @Override
     public boolean deleteDocumentFile(StorageFile documentFile) {
         ExternalServiceToken token = externalServiceTokenRepository.findExternalServiceTokenById(documentFile.getUploadStoreID());
-
         Drive drive = getDriveClient(token);
 
         try {
@@ -168,7 +170,6 @@ public class GoogleDriveStorageRepository implements StorageFileRepository {
     @Override
     public ByteArrayOutputStream downloadFileWithToken(StorageFile documentFile, ExternalServiceToken externalServiceToken) {
         Drive drive = getDriveClient(externalServiceToken);
-
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         try {
@@ -185,7 +186,7 @@ public class GoogleDriveStorageRepository implements StorageFileRepository {
         Drive service = getDriveClient(externalServiceToken);
 
         // Print the names and IDs for up to 10 files.
-        FileList result = null;
+        FileList result;
 
         try {
             result = service.files().list().setQ("'" + path + "' in parents and trashed=false")
@@ -197,14 +198,12 @@ public class GoogleDriveStorageRepository implements StorageFileRepository {
             throw new RuntimeException(e.getMessage());
         }
         List<com.google.api.services.drive.model.File> files = result.getItems();
-
         return transferFilesFromGoogleAPItoInternal(files, externalServiceToken);
     }
 
     @Override
     public StorageFile uploadFile(File file, StorageFile documentFile, UserAccount userAccount, Domain domain) {
         ExternalServiceToken token = externalServiceTokenRepository.findExternalServiceTokenById(documentFile.getUploadStoreID());
-
         Drive drive = getDriveClient(token);
 
         com.google.api.services.drive.model.File fileGoogle = new com.google.api.services.drive.model.File();
@@ -226,7 +225,6 @@ public class GoogleDriveStorageRepository implements StorageFileRepository {
             documentFiles.add(uploadedFile);
 
             return transferFilesFromGoogleAPItoInternal(documentFiles, token).get(0);
-
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -332,8 +330,16 @@ public class GoogleDriveStorageRepository implements StorageFileRepository {
         return externalServiceToken;
     }
 
-    private List<StorageFile> transferFilesFromGoogleAPItoInternal(List<com.google.api.services.drive.model.File> googleFiles, ExternalServiceToken externalServiceToken) {
+    private static Set<String> onlyExport;
 
+    static {
+        onlyExport = Sets.asSet("application/vnd.google-apps.spreadsheet", "application/vnd.google-apps.spreadsheet", "application/vnd.google-apps.audio",
+                "application/vnd.google-apps.document", "application/vnd.google-apps.drawing", "application/vnd.google-apps.file", "application/vnd.google-apps.form",
+                "application/vnd.google-apps.fusiontable", "application/vnd.google-apps.photo", "application/vnd.google-apps.presentation", "application/vnd.google-apps.script",
+                "application/vnd.google-apps.sites", "application/vnd.google-apps.unknown", "application/vnd.google-apps.video");
+    }
+
+    private List<StorageFile> transferFilesFromGoogleAPItoInternal(List<com.google.api.services.drive.model.File> googleFiles, ExternalServiceToken externalServiceToken) {
         List<StorageFile> fileList = new ArrayList<>();
 
         for (com.google.api.services.drive.model.File file : googleFiles) {
@@ -357,21 +363,7 @@ public class GoogleDriveStorageRepository implements StorageFileRepository {
                 documentFile.setFile(true);
                 documentFile.setExportLinks(file.getExportLinks());
 
-                if (mimeType.equals("application/vnd.google-apps.document") ||
-                        mimeType.equals("application/vnd.google-apps.spreadsheet") ||
-                        mimeType.equals("application/vnd.google-apps.audio") ||
-                        mimeType.equals("application/vnd.google-apps.document") ||
-                        mimeType.equals("application/vnd.google-apps.drawing") ||
-                        mimeType.equals("application/vnd.google-apps.file") ||
-                        mimeType.equals("application/vnd.google-apps.form") ||
-                        mimeType.equals("application/vnd.google-apps.fusiontable") ||
-                        mimeType.equals("application/vnd.google-apps.photo") ||
-                        mimeType.equals("application/vnd.google-apps.presentation") ||
-                        mimeType.equals("application/vnd.google-apps.script") ||
-                        mimeType.equals("application/vnd.google-apps.sites") ||
-                        mimeType.equals("application/vnd.google-apps.unknown") ||
-                        mimeType.equals("application/vnd.google-apps.video")
-                        ) {
+                if (onlyExport.contains(mimeType)) {
                     documentFile.setOnlyExport(true);
                 }
             }

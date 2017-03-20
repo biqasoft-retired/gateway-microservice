@@ -61,7 +61,7 @@ public class CustomerController {
     @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "Get all customers", notes = "get all customers, without any pagination. if you have a lot of customers, the response can be big ")
     @RequestMapping(method = RequestMethod.GET)
-    public List<Customer> getAllCustomers(HttpServletResponse response) {
+    public List<Customer> getAllCustomers() {
         return customerRepository.findAllCustomers();
     }
 
@@ -82,7 +82,7 @@ public class CustomerController {
     @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get one customer or lead by id with deals, opportunities and tasks")
     @RequestMapping(value = "details/{id}", method = RequestMethod.GET)
-    public CustomerDetails getDetailedCustomerOrLeadByIdDetails(HttpServletResponse response, @PathVariable("id") String id) {
+    public CustomerDetails getDetailedCustomerOrLeadByIdDetails(@PathVariable("id") String id) {
         CustomerDetails customerDetails = new CustomerDetails();
         customerDetails.setCustomer(customerRepository.findCustomerOrLeadByID(id));
         customerDetails.setTasks(taskRepository.findTasksForCustomer(id));

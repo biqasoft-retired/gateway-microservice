@@ -154,7 +154,7 @@ public class MyUserAccountController {
 
     @ApiOperation(value = "get current user account oauth tokens")
     @RequestMapping(value = "oauth/tokens", method = RequestMethod.GET)
-    public List<UserAccountOAuth2> getAllTokens(HttpServletResponse response) {
+    public List<UserAccountOAuth2> getAllTokens() {
        return microserviceOAuth2User.getAllMyOAuthTokens();
     }
 

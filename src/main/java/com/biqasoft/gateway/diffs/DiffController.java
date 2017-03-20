@@ -54,7 +54,7 @@ public class DiffController {
     @Secured(value = {SYSTEM_ROLES.HISTORY_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get history info of customer changes just as string formatted")
     @RequestMapping(value = "class/{className}/id/{id}", method = RequestMethod.GET)
-    public Object getChanges(HttpServletResponse response, @PathVariable("id") String id, @PathVariable("className") String className) {
+    public Object getChanges(@PathVariable("id") String id, @PathVariable("className") String className) {
 
         List<Change> changes = null;
 
@@ -74,7 +74,7 @@ public class DiffController {
     @Secured(value = {SYSTEM_ROLES.HISTORY_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get history info of customer changes just as string formatted")
     @RequestMapping(value = "class/{className}/id/{id}/format/string", method = RequestMethod.GET)
-    public ChangedLog getChangesStringed(HttpServletResponse response, @PathVariable("id") String id, @PathVariable("className") String className) {
+    public ChangedLog getChangesStringed(@PathVariable("id") String id, @PathVariable("className") String className) {
         ChangedLog changedLog = new ChangedLog();
 
         if (className.equals("USERACCOUNT")) {

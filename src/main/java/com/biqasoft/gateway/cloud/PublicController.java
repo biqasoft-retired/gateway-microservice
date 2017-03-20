@@ -59,13 +59,13 @@ public class PublicController {
 
     @ApiOperation("Reset user password by secret token")
     @RequestMapping(value = "reset_password", method = RequestMethod.POST)
-    public void resetUserPasswordOperation(@RequestBody ResetPasswordTokenDTO resetPasswordTokenDao, HttpServletResponse response) {
+    public void resetUserPasswordOperation(@RequestBody ResetPasswordTokenDTO resetPasswordTokenDao) {
         microserviceUsersPasswordReset.removeAndResetPasswordTokenDao(resetPasswordTokenDao);
     }
 
     @ApiOperation("Request to reset user password")
     @RequestMapping(value = "reset_password_request", method = RequestMethod.POST)
-    public void resetPasswordRequest(@RequestBody ResetPasswordTokenDTO resetPasswordTokenDao, HttpServletResponse response) {
+    public void resetPasswordRequest(@RequestBody ResetPasswordTokenDTO resetPasswordTokenDao) {
         microserviceUsersPasswordReset.create(resetPasswordTokenDao);
     }
 

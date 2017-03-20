@@ -19,6 +19,7 @@ public class MongoTenantConfiguration {
     private final MongoTenantHelper mongoTenantHelper;
 
     // this is connection to user databases with non admin roles
+    // TODO: limit connection number
     private ConcurrentHashMap<String, MongoTemplate> allDomainsUsersAccountMap = new ConcurrentHashMap<>(30);
 
     @Autowired

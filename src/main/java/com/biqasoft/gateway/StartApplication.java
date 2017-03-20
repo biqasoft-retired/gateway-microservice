@@ -15,7 +15,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 
-@ComponentScan(value = "com.biqasoft", excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.biqasoft.entity")})
+// do not spring scan a lot of DTOs end entities
+@ComponentScan(value = "com.biqasoft", excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.biqasoft.entity"),
+                                                         @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.biqasoft.gateway.weather.dto"),
+                                                         @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.biqasoft.gateway.currency.dto.yahoocurrency")})
 @Configuration
 @EnableAspectJAutoProxy
 @EnableAutoConfiguration(exclude = {MongoDataAutoConfiguration.class, MongoAutoConfiguration.class, SecurityAutoConfiguration.class})

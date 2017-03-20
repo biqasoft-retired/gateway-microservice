@@ -60,9 +60,9 @@ public class DropboxController {
     @RequestMapping(value = "oauth2/code/{code}/state/{state}", method = RequestMethod.GET)
     public ExternalServiceToken getAccessCode(@PathVariable("code") String code, @PathVariable("state") String state) {
         DbxWebAuth webAuth = dropboxStorageRepository.getDbxWebAuth();
-        ExternalServiceToken externalServiceToken = null;
+        ExternalServiceToken externalServiceToken;
         boolean updateToken = false;
-        DbxAuthFinish authFinish = null;
+        DbxAuthFinish authFinish;
 
         Map<String, String[]> stringMap = new HashMap<>();
 

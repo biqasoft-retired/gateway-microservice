@@ -56,7 +56,7 @@ public class OpportunityController {
     @Secured(value = {SYSTEM_ROLES.OPPORTUNITY_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "update current opportunity")
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public Opportunity updateOpportunityById(@RequestBody Opportunity opportunity, @PathVariable("id") String id) {
+    public Opportunity updateOpportunityById(@RequestBody Opportunity opportunity) {
         return opportunityRepository.updateOpportunity(opportunity);
     }
 

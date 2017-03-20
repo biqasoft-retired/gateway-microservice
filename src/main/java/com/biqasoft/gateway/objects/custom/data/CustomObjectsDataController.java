@@ -6,10 +6,9 @@ package com.biqasoft.gateway.objects.custom.data;
 
 import com.biqasoft.common.exceptions.ThrowExceptionHelper;
 import com.biqasoft.entity.constants.SYSTEM_ROLES;
-import com.biqasoft.entity.customer.Customer;
-import com.biqasoft.entity.format.BiqaPaginationResultList;
-import com.biqasoft.entity.filters.CustomObjectsDataFilter;
 import com.biqasoft.entity.core.objects.CustomObjectData;
+import com.biqasoft.entity.filters.CustomObjectsDataFilter;
+import com.biqasoft.entity.format.BiqaPaginationResultList;
 import com.biqasoft.gateway.objects.custom.data.dto.PrintableDataContextSaver;
 import com.biqasoft.gateway.objects.custom.data.dto.RequestPrintableBuilder;
 import io.swagger.annotations.Api;
@@ -54,14 +53,14 @@ public class CustomObjectsDataController {
     @Secured(value = {SYSTEM_ROLES.CUSTOM_OBJECT_META_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get one CustomObject by id ")
     @RequestMapping(value = "id/{id}/collection_id/{colId}", method = RequestMethod.GET)
-    public  CustomObjectData getCustomObjectById(HttpServletResponse response, @PathVariable("id") String id, @PathVariable("colId") String colId) {
+    public  CustomObjectData getCustomObjectById(@PathVariable("id") String id, @PathVariable("colId") String colId) {
         return customObjectsRepository.findCustomObjectByIdAndCollectionId(id, colId);
     }
 
     @Secured(value = {SYSTEM_ROLES.CUSTOM_OBJECT_META_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "update CustomObject ", notes = "full updates CustomObject or lead with all new data")
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public  CustomObjectData updateCustomObject(@RequestBody CustomObjectData customer, HttpServletResponse response) {
+    public  CustomObjectData updateCustomObject(@RequestBody CustomObjectData customer) {
         return customObjectsRepository.updateCustomObject(customer);
     }
 
@@ -77,7 +76,7 @@ public class CustomObjectsDataController {
     @Secured(value = {SYSTEM_ROLES.CUSTOM_OBJECT_META_DELETE, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "delete one CustomObject by id ")
     @RequestMapping(value = "id/{id}/collection_id/{colId}", method = RequestMethod.DELETE)
-    public  void deleteCustomObject(HttpServletResponse response, @PathVariable("id") String id, @PathVariable("colId") String colId) {
+    public  void deleteCustomObject(@PathVariable("id") String id, @PathVariable("colId") String colId) {
         customObjectsRepository.deleteCustomObjectWithIdAndCollectionId(id, colId);
     }
 
@@ -101,9 +100,9 @@ public class CustomObjectsDataController {
         if (builder == null || builder.getCustomObjectsDataBuilder() == null || builder.getViewId() == null)
             ThrowExceptionHelper.throwExceptionInvalidRequestLocalized("custom_object.print.no_builder");
 
-        List<CustomObjectData> customObjectDataList = null;
+        List<CustomObjectData> customObjectDataList;
 
-        customObjectDataList = (List<CustomObjectData>) customObjectsRepository.getCustomObjectTemplateFromFilter(builder.getCustomObjectsDataBuilder()).getResultedObjects();
+        customObjectDataList = customObjectsRepository.getCustomObjectTemplateFromFilter(builder.getCustomObjectsDataBuilder()).getResultedObjects();
 
         if (customObjectDataList == null || customObjectDataList.size() == 0){
             ThrowExceptionHelper.throwExceptionInvalidRequestLocalized("custom_object.print.no_elements");

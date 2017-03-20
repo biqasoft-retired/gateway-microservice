@@ -73,8 +73,7 @@ public class CalendarService {
             ical.addEvent(event);
         }
 
-        String str = Biweekly.write(ical).go();
-        return str;
+        return Biweekly.write(ical).go();
     }
 
     /**

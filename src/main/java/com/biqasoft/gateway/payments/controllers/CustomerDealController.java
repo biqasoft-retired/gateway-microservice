@@ -40,13 +40,13 @@ public class CustomerDealController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<CustomerDeal> getAllCustomerDeal() {
         DealsFilter dealsBuilder = new DealsFilter();
-        return (List<CustomerDeal>) paymentsRepository.getDealsByFilter(dealsBuilder).getResultedObjects();
+        return paymentsRepository.getDealsByFilter(dealsBuilder).getResultedObjects();
     }
 
     @Secured(value = {SYSTEM_ROLES.PAYMENT_EDIT_CUSTOMER_DEALS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "update customer deal")
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public CustomerDeal updatedCustomerDeal(@RequestBody CustomerDeal customer, HttpServletResponse response) {
+    public CustomerDeal updatedCustomerDeal(@RequestBody CustomerDeal customer) {
         return paymentsRepository.updateCustomerDeal(customer);
     }
 
@@ -60,7 +60,7 @@ public class CustomerDealController {
     @Secured(value = {SYSTEM_ROLES.PAYMENT_DELETE_CUSTOMER_DEALS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "delete deal by ID")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void deleteCustomerDealById(HttpServletResponse response, @PathVariable("id") String id) {
+    public void deleteCustomerDealById(@PathVariable("id") String id) {
         paymentsRepository.deleteCustomerDeal(id);
     }
 

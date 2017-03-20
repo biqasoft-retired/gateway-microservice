@@ -76,8 +76,7 @@ public class DomainSettingsController {
             biqaObjectsCustomFieldProcessorService.parseCustomFields(domainSettingsRequest.getDomainSettings());
         }
 
-        DomainSettings domainSettings = microserviceDomainSettings.updateDomainSettings(domainSettingsRequest.getDomainSettings());
-        return domainSettings;
+        return microserviceDomainSettings.updateDomainSettings(domainSettingsRequest.getDomainSettings());
     }
 
 }

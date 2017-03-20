@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -36,25 +35,25 @@ public class ConstantsController {
 
     @ApiOperation(value = "get all constants")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Map<String, List<String>> getAllConstants(HttpServletResponse response) {
+    public Map<String, List<String>> getAllConstants() {
         return constantsService.getAllConstants();
     }
 
     @ApiOperation(value = "get constants by name; see /constants/ for names")
     @RequestMapping(value = "name/{name}", method = RequestMethod.GET)
-    public List<String> getConstantsByName(HttpServletResponse response, @PathVariable("name") String name) {
+    public List<String> getConstantsByName(@PathVariable("name") String name) {
         return constantsService.getConstantsByName(name);
     }
 
     @ApiOperation(value = "parse Date Expression")
     @RequestMapping(value = "parse_date/{date}", method = RequestMethod.GET)
-    public DateResponseDTO parseDateExpression(HttpServletResponse response, @PathVariable("date") String date) {
+    public DateResponseDTO parseDateExpression(@PathVariable("date") String date) {
         return new DateResponseDTO(dateServiceRequestContext.parseDateExpression(date));
     }
 
     @ApiOperation(value = "generate BSON object Id")
     @RequestMapping(value = "generate_id", method = RequestMethod.GET)
-    public SampleDataResponse generateId(HttpServletResponse response) {
+    public SampleDataResponse generateId() {
         return new SampleDataResponse(new ObjectId().toString());
     }
 

@@ -19,6 +19,7 @@ import com.biqasoft.entity.core.CreatedInfo;
 import com.biqasoft.entity.system.ExternalServiceToken;
 import com.biqasoft.entity.core.useraccount.UserAccount;
 import com.biqasoft.storage.StorageFileRepository;
+import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -44,7 +45,7 @@ public class WebdavStorageRepository implements StorageFileRepository {
 
     @Override
     public String processListingPath(String path) {
-        if (path == null || path.equals("")) path = "/";
+        if (StringUtils.isEmpty(path)) path = "/";
         return path;
     }
 
@@ -54,7 +55,6 @@ public class WebdavStorageRepository implements StorageFileRepository {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         try {
-//            String url = new URI(  storage.getFullName() )
             InputStream inputStream = sardine.get(externalServiceToken.getServer() + "/" + documentFile.getFullName().replace(" ", "%20"));
             IOUtils.copy(inputStream, stream);
             inputStream.close();
@@ -80,7 +80,6 @@ public class WebdavStorageRepository implements StorageFileRepository {
     @Override
     public boolean deleteDocumentFile(StorageFile documentFile) {
         throw new RuntimeException("Not supported");
-//        return true;
     }
 
     @Override
@@ -97,10 +96,9 @@ public class WebdavStorageRepository implements StorageFileRepository {
     @Override
     public List<StorageFile> getListing(ExternalServiceToken externalServiceToken, String path) {
         List<StorageFile> list = new ArrayList<>();
-
         Sardine sardine = SardineFactory.begin(externalServiceToken.getLogin(), externalServiceToken.getToken());
+        List<DavResource> resources;
 
-        List<DavResource> resources = null;
         try {
             resources = sardine.list(externalServiceToken.getServer() + "/" + path);
         } catch (IOException e) {
@@ -125,7 +123,6 @@ public class WebdavStorageRepository implements StorageFileRepository {
             entity.setUploadStoreID(externalServiceToken.getId());
 
             list.add(entity);
-//            system.out.println(res); // calls the .toString() method.
         }
 
         return list;

@@ -121,9 +121,7 @@ public class SystemActionsService {
         ExecuteDatabaseCommandResultDTO resultDto = new ExecuteDatabaseCommandResultDTO();
 
         DBObject dbObject = (DBObject) JSON.parse(databaseCommandRequestDto.getCommand());
-
         resultDto.setResult(mongoTenantHelper.domainDataBaseUnsafeGet(database).getDb().command(dbObject));
-
         return resultDto;
     }
 
@@ -131,9 +129,7 @@ public class SystemActionsService {
         ExecuteDatabaseCommandResultDTO resultDto = new ExecuteDatabaseCommandResultDTO();
 
         DBObject dbObject = (DBObject) JSON.parse(databaseCommandRequestDto.getCommand());
-
         resultDto.setResult(this.getDomainUnsafeAsUser(currentUser.getDomain().getDomain()).getDb().command(dbObject));
-
         return resultDto;
     }
 

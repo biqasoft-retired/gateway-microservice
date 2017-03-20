@@ -39,8 +39,7 @@ public class DropboxStorageRepository implements StorageFileRepository {
     private final DbxRequestConfig config;
 
     public DbxWebAuth getDbxWebAuth(){
-        DbxWebAuth webAuth = new DbxWebAuth(config, appInfo, dropboxAppRedirect, new DbxMoc(dropboxCSRF));
-        return webAuth;
+        return new DbxWebAuth(config, appInfo, dropboxAppRedirect, new DbxMoc(dropboxCSRF));
     }
 
     public String getDropboxCSRF() {
@@ -99,8 +98,7 @@ public class DropboxStorageRepository implements StorageFileRepository {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         try {
-            DbxEntry.File downloadedFile = client.getFile(documentFile.getFullName(), null, outputStream);
-
+            client.getFile(documentFile.getFullName(), null, outputStream);
         } catch (IOException | DbxException e) {
             throw new RuntimeException(e.getMessage());
         } finally {
@@ -183,7 +181,7 @@ public class DropboxStorageRepository implements StorageFileRepository {
     public List<? extends StorageFile> getMetaInfo(String path, ExternalServiceToken externalServiceToken) {
         List<StorageFile> fileList = new ArrayList<>();
         DbxClient client = new DbxClient(config, externalServiceToken.getToken());
-        DbxEntry.WithChildren listing = null;
+        DbxEntry.WithChildren listing;
 
         try {
             listing = client.getMetadataWithChildren(path);

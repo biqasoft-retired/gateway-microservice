@@ -95,7 +95,7 @@ public class SearchRepository {
 
         CustomObjectsFilter customObjectsBuilder = new CustomObjectsFilter();
 
-        List<CustomObjectTemplate> customObjectTemplates = (List<CustomObjectTemplate>) customObjectsRepository.getCustomObjectTemplateFromBuilder(customObjectsBuilder).getResultedObjects();
+        List<CustomObjectTemplate> customObjectTemplates = customObjectsRepository.getCustomObjectTemplateFromBuilder(customObjectsBuilder).getResultedObjects();
 
         // iterate over all customObjectTemplates
         for (CustomObjectTemplate customObjectTemplate : customObjectTemplates) {
@@ -105,7 +105,7 @@ public class SearchRepository {
             builder.setUseFullTextSearch(true);
             builder.setFullTextSearchRequest(searchRequest.getText());
 
-            List<CustomObjectData> customObjectDatas = (List<CustomObjectData>) customObjectsDataRepository.getCustomObjectTemplateFromFilter(builder).getResultedObjects();
+            List<CustomObjectData> customObjectDatas = customObjectsDataRepository.getCustomObjectTemplateFromFilter(builder).getResultedObjects();
 
             if (customObjectDatas.size() > 0) {
                 CustomObjectSearchResultNode node = new CustomObjectSearchResultNode();
@@ -127,16 +127,14 @@ public class SearchRepository {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(searchRequest.getText());
         Query query = TextQuery.queryText(criteria).sortByScore();
 
-        List<Customer> customers = tenant.find(query, Customer.class);
-        return customers;
+        return tenant.find(query, Customer.class);
     }
 
     private List<Task> findAllTasks(SearchRequest searchRequest) {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(searchRequest.getText());
         Query query = TextQuery.queryText(criteria).sortByScore();
 
-        List<Task> customers = tenant.find(query, Task.class);
-        return customers;
+        return tenant.find(query, Task.class);
     }
 
     private List<UserAccount> findAllUserAccounts(SearchRequest searchRequest) {
@@ -147,32 +145,28 @@ public class SearchRepository {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(searchRequest.getText());
         Query query = TextQuery.queryText(criteria).sortByScore();
 
-        List<StorageFile> customers = tenant.find(query, StorageFile.class);
-        return customers;
+        return tenant.find(query, StorageFile.class);
     }
 
     private List<DataSource> findAllDataSourceSavedData(SearchRequest searchRequest) {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(searchRequest.getText());
         Query query = TextQuery.queryText(criteria).sortByScore();
 
-        List<DataSource> customers = tenant.find(query, DataSource.class);
-        return customers;
+        return tenant.find(query, DataSource.class);
     }
 
     private List<LeadGenMethod> findAllLeadGenMethod(SearchRequest searchRequest) {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(searchRequest.getText());
         Query query = TextQuery.queryText(criteria).sortByScore();
 
-        List<LeadGenMethod> customers = tenant.find(query, LeadGenMethod.class);
-        return customers;
+        return tenant.find(query, LeadGenMethod.class);
     }
 
     private List<LeadGenProject> findAllLeadGenProject(SearchRequest searchRequest) {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(searchRequest.getText());
         Query query = TextQuery.queryText(criteria).sortByScore();
 
-        List<LeadGenProject> customers = tenant.find(query, LeadGenProject.class);
-        return customers;
+        return tenant.find(query, LeadGenProject.class);
     }
 
 }

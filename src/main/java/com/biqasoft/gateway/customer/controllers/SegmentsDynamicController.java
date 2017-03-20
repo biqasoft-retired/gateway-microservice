@@ -38,7 +38,7 @@ public class SegmentsDynamicController {
     @Secured(value = {SYSTEM_ROLES.SEGMENT_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "Get all dynamic segments ")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<DynamicSegment> getAllDynamicSegments(HttpServletResponse response) {
+    public List<DynamicSegment> getAllDynamicSegments() {
         return segmentsRepository.findAllDynamicSegments();
     }
 
@@ -68,7 +68,7 @@ public class SegmentsDynamicController {
     @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get customers by dynamic segment id ")
     @RequestMapping(value = "{id}/customers", method = RequestMethod.GET)
-    public BiqaPaginationResultList<Customer> customersByDynamicSegment(HttpServletResponse response, @PathVariable("id") String id) {
+    public BiqaPaginationResultList<Customer> customersByDynamicSegment(@PathVariable("id") String id) {
         DynamicSegment customerBuilder = segmentsRepository.findDynamicSegmentById(id);
         return customerFilterRequestContextService.getCustomersByFilter(customerBuilder.getCustomerBuilder());
     }
@@ -76,14 +76,14 @@ public class SegmentsDynamicController {
     @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get dynamic segment info by id ")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public DynamicSegment getDynamicSegmentMetaInfoById(HttpServletResponse response, @PathVariable("id") String id) {
+    public DynamicSegment getDynamicSegmentMetaInfoById(@PathVariable("id") String id) {
         return segmentsRepository.findDynamicSegmentById(id);
     }
 
     @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get detailed info by dynamic by id ")
     @RequestMapping(value = "{id}/stats", method = RequestMethod.GET)
-    public SegmentStats getStatsByDynamicSegment(HttpServletResponse response, @PathVariable("id") String id) {
+    public SegmentStats getStatsByDynamicSegment(@PathVariable("id") String id) {
         return segmentsRepository.getStatsByDynamicSegmentId(id);
     }
 

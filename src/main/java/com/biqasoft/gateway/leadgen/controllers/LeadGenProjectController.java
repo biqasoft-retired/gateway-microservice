@@ -33,20 +33,18 @@ public class LeadGenProjectController {
     @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get LeadGenProject by promoCode")
     @RequestMapping(value = "/promo_codes/{id}", method = RequestMethod.GET)
-    public LeadGenProject findLeadGenProjectByPromoCode(HttpServletResponse response, @PathVariable("id") String id) {
+    public LeadGenProject findLeadGenProjectByPromoCode(@PathVariable("id") String id) {
         return leadRepository.findLeadGenProjectByPromoCode(id);
     }
 
     @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all promo codes in system", notes = "from all sales methods (channels)")
     @RequestMapping(value = "/promo_codes", method = RequestMethod.GET)
-    public List<String> findAllLeadGenProjectPromoCodes(HttpServletResponse response) {
+    public List<String> findAllLeadGenProjectPromoCodes() {
         List<String> allPromoCodes = new ArrayList<>();
         List<LeadGenProject> leadGenProjects = leadRepository.findAllLeadGenProject();
         for (LeadGenProject leadGenProject : leadGenProjects) {
-            for (String promoCodes : leadGenProject.getPromoCodes()) {
-                allPromoCodes.add(promoCodes);
-            }
+            allPromoCodes.addAll(leadGenProject.getPromoCodes());
         }
 
         return allPromoCodes;
@@ -78,14 +76,14 @@ public class LeadGenProjectController {
     @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get all sales projects")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<LeadGenProject> getAllLeadGenProjects(HttpServletResponse response) {
+    public List<LeadGenProject> getAllLeadGenProjects() {
         return leadRepository.findAllLeadGenProject();
     }
 
     @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
     @ApiOperation(value = "get sale project by ID")
     @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
-    public LeadGenProject getLeadGenProjectById(HttpServletResponse response, @PathVariable("id") String id) {
+    public LeadGenProject getLeadGenProjectById(@PathVariable("id") String id) {
         return leadRepository.findLeadGenProjectById(id);
     }
 

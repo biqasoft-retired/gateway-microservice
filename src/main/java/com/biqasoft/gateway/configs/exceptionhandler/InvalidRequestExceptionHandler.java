@@ -4,10 +4,10 @@
 
 package com.biqasoft.gateway.configs.exceptionhandler;
 
-import com.biqasoft.microservice.i18n.MessageByLocaleService;
-import com.biqasoft.common.exceptions.dto.ErrorResource;
 import com.biqasoft.common.exceptions.InvalidRequestException;
 import com.biqasoft.common.exceptions.InvalidRequestLocalizedException;
+import com.biqasoft.common.exceptions.dto.ErrorResource;
+import com.biqasoft.microservice.i18n.MessageByLocaleService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;

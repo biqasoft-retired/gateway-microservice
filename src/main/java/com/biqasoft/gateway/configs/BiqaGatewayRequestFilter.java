@@ -61,7 +61,14 @@ public class BiqaGatewayRequestFilter implements Filter {
         // save user request locale to ThreadLocal, used in requests to microservices
         MDC.put("Accept-Language", request.getLocale().getLanguage());
 
-        chain.doFilter(req, res);
+        try {
+            chain.doFilter(req, res);
+        }catch (RuntimeException e){
+            // this will not conflict with InvalidRequestExceptionHandler
+            res.setContentType("application/json;charset=utf-8");
+            response.setStatus(500);
+            response.getWriter().append("{}").flush();
+        }
     }
 
     public void destroy() {

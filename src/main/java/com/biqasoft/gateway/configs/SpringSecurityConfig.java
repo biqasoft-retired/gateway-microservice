@@ -26,7 +26,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     private GatewayAuthenticationProvider gatewayAuthenticationProvider;
 
     @Autowired
-    private BiqaGatewayIpAndDomainFilter biqaGatewayIpAndDomainFilter;
+    private BiqaGatewayAuthFilter biqaGatewayAuthFilter;
 
     @Autowired
     private AuthExceptionHandler authExceptionHandler;
@@ -37,7 +37,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterAfter(biqaGatewayIpAndDomainFilter, BasicAuthenticationFilter.class);
+        http.addFilterAfter(biqaGatewayAuthFilter, BasicAuthenticationFilter.class);
         http.addFilterAfter(new ExceptionTranslationFilter(authExceptionHandler), BasicAuthenticationFilter.class);
 
         http.securityContext();

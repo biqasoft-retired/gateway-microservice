@@ -10,7 +10,7 @@ import org.springframework.http.HttpMethod;
  *         Date: 7/18/2016
  *         All Rights Reserved
  */
-@Microservice(value = "exporter", basePath = "/export/v1/")
+@Microservice(value = "exporter", basePath = "/v1/export/")
 public interface MicroserviceExport {
 
     @MicroMapping(path = "from/html/to/{toFormat}", method = HttpMethod.POST)

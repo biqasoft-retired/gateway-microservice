@@ -10,7 +10,7 @@ import com.biqasoft.entity.filters.CustomObjectsDataFilter;
 import com.biqasoft.entity.core.objects.CustomObjectData;
 import com.biqasoft.entity.objects.CustomObjectTemplate;
 import com.biqasoft.gateway.customer.repositories.CustomerExcelRepository;
-import com.biqasoft.gateway.export.MicroserviceExport;
+import com.biqasoft.gateway.export.MicroserviceExportExcel;
 import com.biqasoft.gateway.objects.custom.template.CustomObjectsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +29,12 @@ public class CustomObjectDataExcelRepository {
     private final CustomObjectsDataRepository customObjectsDataRepository;
     private final CustomObjectsRepository customObjectsRepository;
     private static final Logger logger = LoggerFactory.getLogger(CustomerExcelRepository.class);
-    private final MicroserviceExport microserviceExport;
+    private final MicroserviceExportExcel microserviceExport;
     private final CurrentUser currentUser;
 
     @Autowired
     public CustomObjectDataExcelRepository(CustomObjectsRepository customObjectsRepository, CustomObjectsDataRepository customObjectsDataRepository,
-                                           MicroserviceExport microserviceExport, CurrentUser currentUser) {
+                                           MicroserviceExportExcel microserviceExport, CurrentUser currentUser) {
         this.customObjectsRepository = customObjectsRepository;
         this.customObjectsDataRepository = customObjectsDataRepository;
         this.microserviceExport = microserviceExport;
@@ -47,7 +47,7 @@ public class CustomObjectDataExcelRepository {
     }
 
     public byte[] printExcel(CustomObjectTemplate customObjectTemplate, CustomObjectsDataFilter filter) {
-        List<CustomObjectData> list = (List<CustomObjectData>) customObjectsDataRepository.getCustomObjectTemplateFromFilter(filter).getResultedObjects();
+        List<CustomObjectData> list = customObjectsDataRepository.getCustomObjectTemplateFromFilter(filter).getResultedObjects();
 
         ExportCustomObjectDTO requestPayload = new ExportCustomObjectDTO();
         requestPayload.setBuilder(filter);

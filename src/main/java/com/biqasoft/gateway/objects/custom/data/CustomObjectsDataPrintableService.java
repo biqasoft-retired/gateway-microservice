@@ -6,8 +6,8 @@ package com.biqasoft.gateway.objects.custom.data;
 
 import com.biqasoft.common.exceptions.InvalidRequestException;
 import com.biqasoft.common.exceptions.ThrowExceptionHelper;
-import com.biqasoft.entity.core.CurrentUser;
 import com.biqasoft.entity.constants.CUSTOM_OBJECTS_PRINTABLE_TYPES;
+import com.biqasoft.entity.core.CurrentUser;
 import com.biqasoft.entity.core.objects.CustomObjectData;
 import com.biqasoft.entity.objects.CustomObjectPrintableTemplate;
 import com.biqasoft.entity.objects.CustomObjectTemplate;

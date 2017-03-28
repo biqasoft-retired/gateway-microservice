@@ -9,7 +9,7 @@ import com.biqasoft.entity.customer.Customer;
 import com.biqasoft.entity.format.BiqaPaginationResultList;
 import com.biqasoft.entity.dto.export.excel.ExportCustomersDTO;
 import com.biqasoft.entity.filters.CustomerFilter;
-import com.biqasoft.gateway.export.MicroserviceExport;
+import com.biqasoft.gateway.export.MicroserviceExportExcel;
 import com.biqasoft.gateway.system.parsing.ParsingFilesServices;
 import com.biqasoft.microservice.communicator.servicediscovery.MicroserviceHelper;
 import org.slf4j.Logger;
@@ -25,14 +25,14 @@ public class CustomerExcelRepository {
     private final SalesFunnelRepository salesFunnelRepository;
     private final CustomerRepository customerRepository;
     private final com.biqasoft.microservice.communicator.servicediscovery.MicroserviceHelper microserviceHelper;
-    private final MicroserviceExport microserviceExport;
+    private final MicroserviceExportExcel microserviceExport;
     private final CurrentUser currentUser;
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerExcelRepository.class);
 
     @Autowired
     public CustomerExcelRepository(CustomerFilterRequestContextService customerFilterRequestContextService, ParsingFilesServices parsingFilesServices,
-                                   SalesFunnelRepository salesFunnelRepository, CustomerRepository customerRepository, MicroserviceHelper microserviceHelper, MicroserviceExport microserviceExport, CurrentUser currentUser) {
+                                   SalesFunnelRepository salesFunnelRepository, CustomerRepository customerRepository, MicroserviceHelper microserviceHelper, MicroserviceExportExcel microserviceExport, CurrentUser currentUser) {
         this.customerFilterRequestContextService = customerFilterRequestContextService;
         this.parsingFilesServices = parsingFilesServices;
         this.salesFunnelRepository = salesFunnelRepository;

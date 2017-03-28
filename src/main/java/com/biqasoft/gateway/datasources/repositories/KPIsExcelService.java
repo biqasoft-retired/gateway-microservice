@@ -10,7 +10,7 @@ import com.biqasoft.entity.format.BiqaPaginationResultList;
 import com.biqasoft.entity.dto.export.excel.ExportKPIDTO;
 import com.biqasoft.entity.filters.DataSourceFilter;
 import com.biqasoft.gateway.customer.repositories.CustomerExcelRepository;
-import com.biqasoft.gateway.export.MicroserviceExport;
+import com.biqasoft.gateway.export.MicroserviceExportExcel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +24,11 @@ public class KPIsExcelService {
 
     private final DataSourceRepository dataSourceRepository;
     private static final Logger logger = LoggerFactory.getLogger(CustomerExcelRepository.class);
-    private final MicroserviceExport microserviceExport;
+    private final MicroserviceExportExcel microserviceExport;
     private final CurrentUser currentUser;
 
     @Autowired
-    public KPIsExcelService(DataSourceRepository dataSourceRepository, MicroserviceExport microserviceExport, CurrentUser currentUser) {
+    public KPIsExcelService(DataSourceRepository dataSourceRepository, MicroserviceExportExcel microserviceExport, CurrentUser currentUser) {
         this.dataSourceRepository = dataSourceRepository;
         this.microserviceExport = microserviceExport;
         this.currentUser = currentUser;

@@ -41,7 +41,7 @@
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.biqasoft:auth-microservice-communication:1.0-RELEASE" level="project" />
     <orderEntry type="module" module-name="microservice-communicator" />
-    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-commons:1.1.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-commons:2.0.0.M7" level="project" />
     <orderEntry type="library" name="Maven: com.biqasoft:entity:1.0-RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.biqasoft:entity-core:1.0-RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.biqasoft:customer:1.0-RELEASE" level="project" />

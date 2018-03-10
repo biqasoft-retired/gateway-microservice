@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.admin;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.gateway.admin.dto.ExecuteDatabaseCommandRequestDTO;
 import com.biqasoft.gateway.admin.dto.ExecuteDatabaseCommandResultDTO;
 import io.swagger.annotations.Api;
@@ -21,7 +21,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Api(value = "System administration use only", description = " VERY secured endpoint", hidden = true)
 @ApiIgnore
-@Secured(value = {SYSTEM_ROLES.ROOT_USER})
+@Secured(value = {SystemRoles.ROOT_USER})
 @RestController
 @RequestMapping(value = "/v1/root")
 public class RootAdminController {

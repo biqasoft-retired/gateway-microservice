@@ -4,8 +4,8 @@
 
 package com.biqasoft.gateway.useraccount.controllers;
 
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.core.CurrentUser;
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
 import com.biqasoft.entity.dto.httpresponse.SampleDataResponse;
 import com.biqasoft.entity.core.useraccount.oauth2.OAuth2Application;
 import com.biqasoft.microservice.common.MicroserviceOAuth2Applications;
@@ -55,7 +55,7 @@ public class OAuth2ApplicationController {
         microserviceOAuth2Applications.deleteOAuth2ApplicationById(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "create New Application")
     @RequestMapping(value = "", method = RequestMethod.POST)
     public OAuth2Application createNewApplication(@RequestBody OAuth2Application application) {
@@ -64,7 +64,7 @@ public class OAuth2ApplicationController {
         return microserviceOAuth2Applications.create(application);
     }
 
-    @Secured(value = {SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update oauth application")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public OAuth2Application updateApplication(@RequestBody OAuth2Application application){

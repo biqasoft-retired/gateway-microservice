@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.leadgen.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.customer.LeadGenMethod;
 import com.biqasoft.entity.customer.LeadGenProject;
 import com.biqasoft.entity.filters.LeadGenMethodExcelFilter;
@@ -25,7 +25,7 @@ import java.util.List;
 import static com.biqasoft.entity.constants.SYSTEM_CONSTS.EXCEL_MIME_TYPE;
 
 @Api(value = "customer and Leads Sales Methods & Projects")
-@Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.LEAD_GEN_METHOD_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/lead_gen_method")
 public class LeadGenMethodController {
@@ -39,7 +39,7 @@ public class LeadGenMethodController {
         this.leadRepository = leadRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "add new sale method")
     @RequestMapping(method = RequestMethod.POST)
     public LeadGenMethod addNewLeadGenMethod(@RequestBody LeadGenMethod role, HttpServletResponse response) {
@@ -51,7 +51,7 @@ public class LeadGenMethodController {
         return leadGenMethod;
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get sales method by promo code")
     @RequestMapping(value = "/promo_codes/{id}", method = RequestMethod.GET)
     public LeadGenMethod findLeadGenMethodByPromoCode(@PathVariable("id") String id) {
@@ -60,7 +60,7 @@ public class LeadGenMethodController {
         return l;
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_EDIT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update current sale methods")
     @RequestMapping(method = RequestMethod.PUT)
     public LeadGenMethod updateLeadGenMethod(@RequestBody LeadGenMethod leadGenMethod, HttpServletResponse response) {
@@ -68,7 +68,7 @@ public class LeadGenMethodController {
         return leadRepository.updateLeadGenMethod(leadGenMethod);
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all lead gen methods")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<LeadGenMethod> getAllLeadGenMethod() {
@@ -77,14 +77,14 @@ public class LeadGenMethodController {
         return methods;
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get sale method by ID and resolve sales funnel data sources")
     @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
     public LeadGenMethod getLeadGenMethodWithResolvedSalesFunnelStatuses(@PathVariable("id") String id) {
         return leadRepository.findLeadGenMethodById(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_EXCEL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_EXCEL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get lead gen methods with KPIs in excel by criteria (builder)", notes = ", if you have a lot of methods, it can take up to 2 minutes")
     @RequestMapping(value = "filter/excel", method = RequestMethod.POST)
     public ResponseEntity<byte[]> getLeadGenMethodExcelFilter(@RequestBody LeadGenMethodExcelFilter leadGenMethodBuilder) {

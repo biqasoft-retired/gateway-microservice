@@ -7,7 +7,7 @@ package com.biqasoft.gateway.storage.controllers;
 import com.biqasoft.common.exceptions.InternalSeverErrorProcessingRequestException;
 import com.biqasoft.common.exceptions.ThrowExceptionHelper;
 import com.biqasoft.entity.constants.DOCUMENT_FILE;
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.dto.httpresponse.SampleDataResponse;
 import com.biqasoft.entity.filters.StorageFileFilter;
 import com.biqasoft.entity.format.BiqaPaginationResultList;
@@ -38,7 +38,7 @@ import static com.biqasoft.entity.constants.TOKEN_TYPES.DEFAULT_STORAGE;
 import static com.biqasoft.storage.s3.DefaultS3FileRepository.BACKUP_FOLDER_ALIAS;
 
 @Api(value = "Storage")
-@Secured(value = {SYSTEM_ROLES.DOCUMENTS_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.DOCUMENTS_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/storage")
 public class StorageController {
@@ -61,7 +61,7 @@ public class StorageController {
         this.defaultDirectLinkTTL = defaultDirectLinkTTL;
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOCUMENTS_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOCUMENTS_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all uploaded files and folders", notes = "only uploaded files and folders will be shown")
     @RequestMapping(method = RequestMethod.GET)
     public List<StorageFile> getAllDocuments() {
@@ -72,7 +72,7 @@ public class StorageController {
         return biqaPaginationResultList.getResultedObjects();
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOCUMENTS_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOCUMENTS_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get list of files in folder and token. used for google drive, dropbox etc...; if you want system default storage - tokenID should be 'DEFAULT' ")
     @RequestMapping(value = "listing", method = RequestMethod.GET)
     public List<StorageFile> getAllFiles(@RequestParam(value = "path") String path, @RequestParam(value = "tokenID") String id) {
@@ -94,14 +94,14 @@ public class StorageController {
         return documentFileRepository.getListing(externalServiceToken, path);
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOCUMENTS_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOCUMENTS_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get document meta info by Id")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public StorageFile detailedDocumentFileInfo(@PathVariable("id") String id) {
         return documentFileRepository.findStorageFileById(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOCUMENTS_DOWNLOAD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOCUMENTS_DOWNLOAD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get public URL of document by ID")
     @RequestMapping(value = "get_document_url_by_id/{id}", method = RequestMethod.GET)
     public SampleDataResponse getDocumentURLById(@PathVariable("id") String id) {
@@ -115,14 +115,14 @@ public class StorageController {
         return awsAccount.getDirectLinkForFileByBucketAndFullNameAndTTL(documentFile.getBucket(), documentFile.getFullName(), ttl);
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOCUMENTS_DOWNLOAD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOCUMENTS_DOWNLOAD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "delete file/folder")
     @RequestMapping(value = "delete", method = RequestMethod.POST)
     public void deleteDocumentFile(@RequestBody StorageFile documentFile) {
         documentFileRepository.deleteDocumentFile(documentFile);
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOCUMENTS_DOWNLOAD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOCUMENTS_DOWNLOAD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "download file")
     @RequestMapping(value = "download_file", method = RequestMethod.POST)
     public void downloadFile(@RequestBody StorageFile documentFile, HttpServletResponse response) {
@@ -138,7 +138,7 @@ public class StorageController {
         }
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOCUMENTS_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOCUMENTS_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "add meta info to new document",
             notes = "creating new document, in result you get ID which you can later use to upload new file with method 'sendWithPreId' ")
     @RequestMapping(value = "upload/send_meta_information", method = RequestMethod.POST)
@@ -162,21 +162,21 @@ public class StorageController {
         return defaultStorageService.getStorageFileByFilter(builder);
     }
 
-    @Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_GET_ALL_ACCOUNTS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.EXTERNAL_SERVICES_GET_ALL_ACCOUNTS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all storage providers")
     @RequestMapping(value = "providers", method = RequestMethod.POST)
     public List<ExternalServiceToken> getMetaInfoForUploadingFile() {
         return externalServiceTokenRepository.findAllStorageTokens();
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOCUMENTS_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOCUMENTS_EDIT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update meta information of document")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public StorageFile updateDocumentFile(@RequestBody StorageFile documentFile) {
         return defaultStorageService.updateStorageFile(documentFile);
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOCUMENTS_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOCUMENTS_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "upload new document",
             notes = "upload new document, firstly you should get new document ID from 'POST sendMetaInformation'  ")
     @RequestMapping(value = "upload/send_with_pre_id/{id}", method = RequestMethod.POST)

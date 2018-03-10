@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.leadgen.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.customer.LeadGenProject;
 import com.biqasoft.gateway.leadgen.repositories.LeadGenRepository;
 import io.swagger.annotations.Api;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "customer and Leads Sales Methods & Projects")
-@Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.LEAD_GEN_METHOD_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/lead_gen_method/lead_gen_project")
 public class LeadGenProjectController {
@@ -30,14 +30,14 @@ public class LeadGenProjectController {
         this.leadRepository = leadRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get LeadGenProject by promoCode")
     @RequestMapping(value = "/promo_codes/{id}", method = RequestMethod.GET)
     public LeadGenProject findLeadGenProjectByPromoCode(@PathVariable("id") String id) {
         return leadRepository.findLeadGenProjectByPromoCode(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all promo codes in system", notes = "from all sales methods (channels)")
     @RequestMapping(value = "/promo_codes", method = RequestMethod.GET)
     public List<String> findAllLeadGenProjectPromoCodes() {
@@ -50,7 +50,7 @@ public class LeadGenProjectController {
         return allPromoCodes;
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_EDIT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update current sale project")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public LeadGenProject updateLeadGeProject(@RequestBody LeadGenProject leadGenProject, HttpServletResponse response) {
@@ -59,7 +59,7 @@ public class LeadGenProjectController {
         return leadGenProject;
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "add new current sale project")
     @RequestMapping(value = "", method = RequestMethod.POST)
     public LeadGenProject addNewLeadGenProject(@RequestBody LeadGenProject role, HttpServletResponse response) {
@@ -73,14 +73,14 @@ public class LeadGenProjectController {
         return leadGenProject;
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all sales projects")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<LeadGenProject> getAllLeadGenProjects() {
         return leadRepository.findAllLeadGenProject();
     }
 
-    @Secured(value = {SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.LEAD_GEN_METHOD_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get sale project by ID")
     @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
     public LeadGenProject getLeadGenProjectById(@PathVariable("id") String id) {

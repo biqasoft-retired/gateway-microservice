@@ -5,7 +5,7 @@
 package com.biqasoft.gateway.calendar;
 
 import com.biqasoft.common.exceptions.ThrowExceptionHelper;
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.format.BiqaPaginationResultList;
 import com.biqasoft.entity.tasks.Task;
 import com.biqasoft.entity.tasks.TaskTemplate;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api("Tasks")
-@Secured({SYSTEM_ROLES.TASK_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured({SystemRoles.TASK_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping("/v1/calendar")
 public class CalendarController {
@@ -37,14 +37,14 @@ public class CalendarController {
         this.taskRepository = taskRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all tasks")
     @RequestMapping(value = "tasks/all/calendar.ical", method = RequestMethod.GET)
     public String getAllTasks() {
         return calendarService.createCalendar();
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all tasks")
     @RequestMapping(value = "tasks/template/id/{id}/calendar.ical", method = RequestMethod.GET)
     public String getAllTasksByTemplate(@PathVariable("id") String id) {

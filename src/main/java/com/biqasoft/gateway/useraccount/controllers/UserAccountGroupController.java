@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.useraccount.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.core.useraccount.UserAccountGroup;
 import com.biqasoft.gateway.useraccount.MicroserviceUserAccountGroup;
 import io.swagger.annotations.Api;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Api(value = "User Accounts Groups")
-@Secured(value = {SYSTEM_ROLES.USER_GROUP_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.USER_GROUP_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/account/groups")
 public class UserAccountGroupController {
@@ -28,21 +28,21 @@ public class UserAccountGroupController {
         this.microserviceUserAccountGroup = microserviceUserAccountGroup;
     }
 
-    @Secured(value = {SYSTEM_ROLES.USER_GROUP_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.USER_GROUP_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all users groups in current domain")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<UserAccountGroup> getAllUserAccountGroups() {
         return microserviceUserAccountGroup.findAll();
     }
 
-    @Secured(value = {SYSTEM_ROLES.USER_GROUP_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.USER_GROUP_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get group by id")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public UserAccountGroup getUserAccountGroupById(@PathVariable("id") String id) {
         return microserviceUserAccountGroup.findById(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.USER_GROUP_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.USER_GROUP_EDIT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update user account")
     @RequestMapping(method = RequestMethod.PUT)
     public UserAccountGroup updateUserAccountGroup(@RequestBody UserAccountGroup accountGroup) {
@@ -50,7 +50,7 @@ public class UserAccountGroupController {
         return accountGroup;
     }
 
-    @Secured(value = {SYSTEM_ROLES.USER_GROUP_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.USER_GROUP_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "create user account")
     @RequestMapping(method = RequestMethod.POST)
     public UserAccountGroup addNewUserAccountGroup(@RequestBody UserAccountGroup accountGroup) {
@@ -58,7 +58,7 @@ public class UserAccountGroupController {
         return accountGroup;
     }
 
-    @Secured(value = {SYSTEM_ROLES.USER_GROUP_DELETE, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.USER_GROUP_DELETE, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "delete group by id")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void deleteUserAccountGroupById(@PathVariable("id") String id) {

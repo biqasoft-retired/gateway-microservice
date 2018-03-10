@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.storage.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.dto.httpresponse.LinkFieldDataResponse;
 import com.biqasoft.entity.system.ExternalServiceToken;
 import com.biqasoft.gateway.storage.repositories.GoogleDriveStorageRepository;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Api(value = "External common")
-@Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.EXTERNAL_SERVICES_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RequestMapping(value = "v1/token/gdrive")
 @ConditionalOnProperty({"google.drive.CLIENT_ID_KEY", "biqa.REQUIRE_ALL"})
 public class GoogleDriveController {
@@ -35,7 +35,7 @@ public class GoogleDriveController {
         this.redirectLink = redirectLink;
     }
 
-    @Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_GET_ALL_ACCOUNTS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.EXTERNAL_SERVICES_GET_ALL_ACCOUNTS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "first step to connect new account", notes = "return string ( url ) where user in browser should be redirected")
     @RequestMapping(value = "redirect_link", method = RequestMethod.GET)
     public  LinkFieldDataResponse getAuthLinkToConnectNewAccount() {
@@ -45,7 +45,7 @@ public class GoogleDriveController {
         return linkFieldDataResponse;
     }
 
-    @Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_ADD_ACCOUNTS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.EXTERNAL_SERVICES_ADD_ACCOUNTS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "resolve in server aces token ")
     @RequestMapping(value = "oauth2/code/", method = RequestMethod.GET)
     public ExternalServiceToken getAccessCode(@RequestParam("code") String code) {

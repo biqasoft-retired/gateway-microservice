@@ -8,7 +8,7 @@ import com.biqasoft.audit.object.BiqaClassService;
 import com.biqasoft.audit.object.ObjectsAuditHistoryService;
 import com.biqasoft.audit.object.diffs.ChangedLog;
 import com.biqasoft.common.exceptions.ThrowExceptionHelper;
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.core.CurrentUser;
 import com.biqasoft.entity.core.Domain;
 import com.biqasoft.entity.core.objects.CustomObjectData;
@@ -26,13 +26,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Api(value = "History objects")
 @ApiIgnore
 @RestController
-@Secured(value = {SYSTEM_ROLES.HISTORY_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.HISTORY_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RequestMapping(value = "/v1/diff/history/objects")
 public class DiffController {
 
@@ -51,7 +50,7 @@ public class DiffController {
         this.microserviceUsersDiffRepository = microserviceUsersDiffRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.HISTORY_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.HISTORY_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get history info of customer changes just as string formatted")
     @RequestMapping(value = "class/{className}/id/{id}", method = RequestMethod.GET)
     public Object getChanges(@PathVariable("id") String id, @PathVariable("className") String className) {
@@ -71,7 +70,7 @@ public class DiffController {
         return ObjectsAuditHistoryService.transformJaversChangesToDTO(changes);
     }
 
-    @Secured(value = {SYSTEM_ROLES.HISTORY_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.HISTORY_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get history info of customer changes just as string formatted")
     @RequestMapping(value = "class/{className}/id/{id}/format/string", method = RequestMethod.GET)
     public ChangedLog getChangesStringed(@PathVariable("id") String id, @PathVariable("className") String className) {
@@ -97,7 +96,7 @@ public class DiffController {
      */
     private JsonNode processUserAccountChanges(String id, String className) {
 
-        if (!currentUser.haveRole(SYSTEM_ROLES.ROLE_ADMIN)) {
+        if (!currentUser.haveRole(SystemRoles.ROLE_ADMIN)) {
             ThrowExceptionHelper.throwExceptionInvalidRequestLocalized("auth.access.deny.useraccount.view.changes");
             return null;
         } else {

@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.storage.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.constants.TOKEN_TYPES;
 import com.biqasoft.entity.dto.httpresponse.LinkFieldDataResponse;
 import com.biqasoft.entity.system.ExternalServiceToken;
@@ -29,7 +29,7 @@ import java.util.Map;
 
 @RestController
 @Api(value = "External common")
-@Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.EXTERNAL_SERVICES_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RequestMapping(value = "v1//token/dropbox")
 @ConditionalOnProperty({"dropbox.app.key", "biqa.REQUIRE_ALL"})
 public class DropboxController {
@@ -43,7 +43,7 @@ public class DropboxController {
         this.dropboxStorageRepository = dropboxStorageRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_GET_ALL_ACCOUNTS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.EXTERNAL_SERVICES_GET_ALL_ACCOUNTS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "first step to connect new account", notes = "return string ( url ) where user in browser should be redirected")
     @RequestMapping(value = "oauth2/request_to_connect_new_account", method = RequestMethod.GET)
     public LinkFieldDataResponse dropboxRequestToConnectNewAccount() {
@@ -55,7 +55,7 @@ public class DropboxController {
         return linkFieldDataResponse;
     }
 
-    @Secured(value = {SYSTEM_ROLES.EXTERNAL_SERVICES_ADD_ACCOUNTS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.EXTERNAL_SERVICES_ADD_ACCOUNTS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "resolve in server aces token in yandex direct from code")
     @RequestMapping(value = "oauth2/code/{code}/state/{state}", method = RequestMethod.GET)
     public ExternalServiceToken getAccessCode(@PathVariable("code") String code, @PathVariable("state") String state) {

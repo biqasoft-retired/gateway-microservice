@@ -7,7 +7,7 @@ package com.biqasoft.gateway.bpmn.safejs;
 import com.biqasoft.bpmn.safejs.ExecutorCodeService;
 import com.biqasoft.bpmn.safejs.entity.ExecuteJsRequest;
 import com.biqasoft.bpmn.safejs.entity.ExecuteJsResponse;
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Api(value = "BPMN")
 @ApiIgnore
 @RestController
-@Secured(value = {SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RequestMapping(value = "/v1/bpmn/safejs")
 public class ExecuteJsController {
 
@@ -35,14 +35,14 @@ public class ExecuteJsController {
         this.executorCodeService = executorCodeService;
     }
 
-    @Secured(value = {SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "")
     @RequestMapping(value = "execute", method = RequestMethod.POST)
     public ExecuteJsResponse jsCode(@RequestBody ExecuteJsRequest executeJsRequest) {
         return executorCodeService.executeCode(executeJsRequest);
     }
 
-    @Secured(value = {SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "execute/raw")
     @RequestMapping(value = "execute/raw", method = RequestMethod.POST)
     public ExecuteJsResponse executeRawCode(@RequestBody String code) {

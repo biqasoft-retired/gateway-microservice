@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.payments.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.customer.Customer;
 import com.biqasoft.entity.customer.Opportunity;
 import com.biqasoft.entity.format.BiqaPaginationResultList;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Api(value = "Payment, Deals & Costs")
-@Secured(value = {SYSTEM_ROLES.PAYMENT_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.PAYMENT_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/payments/customer_deal")
 public class CustomerDealController {
@@ -35,7 +35,7 @@ public class CustomerDealController {
     private CustomerRepository customerRepository;
     private OpportunityRepository opportunityRepository;
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_GET_CUSTOMER_DEALS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_GET_CUSTOMER_DEALS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all customer deals")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<CustomerDeal> getAllCustomerDeal() {
@@ -43,28 +43,28 @@ public class CustomerDealController {
         return paymentsRepository.getDealsByFilter(dealsBuilder).getResultedObjects();
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_EDIT_CUSTOMER_DEALS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_EDIT_CUSTOMER_DEALS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update customer deal")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public CustomerDeal updatedCustomerDeal(@RequestBody CustomerDeal customer) {
         return paymentsRepository.updateCustomerDeal(customer);
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_GET_CUSTOMER_DEALS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_GET_CUSTOMER_DEALS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get deals by customer ID")
     @RequestMapping(value = "common/customer_id/{id}", method = RequestMethod.GET)
     public List<CustomerDeal> findAllDealsByCustomerId(@PathVariable("id") String id) {
         return paymentsRepository.findAllDealsByCustomerId(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_DELETE_CUSTOMER_DEALS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_DELETE_CUSTOMER_DEALS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "delete deal by ID")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void deleteCustomerDealById(@PathVariable("id") String id) {
         paymentsRepository.deleteCustomerDeal(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_ADD_CUSTOMER_DEAL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_ADD_CUSTOMER_DEAL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "add new company deal",
             notes = "leadGenMethod & project for customer deal can be independent from customer but if you not specify - they will be get from customer info")
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -83,7 +83,7 @@ public class CustomerDealController {
         return customerDeal;
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_ADD_CUSTOMER_DEAL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_ADD_CUSTOMER_DEAL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "transfer opportunity to deal")
     @RequestMapping(value = "deal_from_opportunity/{id}", method = RequestMethod.POST)
     public CustomerDeal transferOpportunityToDeal(HttpServletResponse response, @PathVariable("id") String id) {
@@ -113,7 +113,7 @@ public class CustomerDealController {
         return customerDeal;
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_GET_CUSTOMER_DEALS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_GET_CUSTOMER_DEALS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get customer deals by filter (builder) ")
     @RequestMapping(value = "filter", method = RequestMethod.POST)
     public BiqaPaginationResultList<CustomerDeal> customerDealBuilder(@RequestBody DealsFilter dealsBuilder) {

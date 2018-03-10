@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.cloud.democonfiguration;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.core.useraccount.UserAccountGroup;
 import com.biqasoft.gateway.useraccount.MicroserviceUserAccountGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +35,12 @@ public class CreateTestUserAccountsGroups {
 
             List<String> marketingRoles = marketing.getGrantedRoles();
 
-            marketingRoles.add(SYSTEM_ROLES.LEAD_GEN_METHOD_ADD);
-            marketingRoles.add(SYSTEM_ROLES.LEAD_GEN_METHOD_EDIT);
-            marketingRoles.add(SYSTEM_ROLES.LEAD_GEN_METHOD_EXCEL);
-            marketingRoles.add(SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL);
-            marketingRoles.add(SYSTEM_ROLES.LEAD_GEN_METHOD_ROOT);
-            marketingRoles.add(SYSTEM_ROLES.KPI_LEAD_GEN_METHOD);
+            marketingRoles.add(SystemRoles.LEAD_GEN_METHOD_ADD);
+            marketingRoles.add(SystemRoles.LEAD_GEN_METHOD_EDIT);
+            marketingRoles.add(SystemRoles.LEAD_GEN_METHOD_EXCEL);
+            marketingRoles.add(SystemRoles.LEAD_GEN_METHOD_GET_ALL);
+            marketingRoles.add(SystemRoles.LEAD_GEN_METHOD_ROOT);
+            marketingRoles.add(SystemRoles.KPI_LEAD_GEN_METHOD);
 
             microserviceUserAccountGroup.create(marketing);
         }
@@ -52,22 +52,22 @@ public class CreateTestUserAccountsGroups {
 
             List<String> baseGroupRole = baseGroup.getGrantedRoles();
 
-            baseGroupRole.add(SYSTEM_ROLES.USER_ACCOUNT_ROOT);
-            baseGroupRole.add(SYSTEM_ROLES.USER_ACCOUNT_GET);
-            baseGroupRole.add(SYSTEM_ROLES.DOMAIN_COMPANY_GET_BASIC);
+            baseGroupRole.add(SystemRoles.USER_ACCOUNT_ROOT);
+            baseGroupRole.add(SystemRoles.USER_ACCOUNT_GET);
+            baseGroupRole.add(SystemRoles.DOMAIN_COMPANY_GET_BASIC);
 
             // allow get all tasks
-            baseGroupRole.add(SYSTEM_ROLES.TASK_ROOT);
-            baseGroupRole.add(SYSTEM_ROLES.TASK_GET);
-            baseGroupRole.add(SYSTEM_ROLES.TASK_ADD);
-            baseGroupRole.add(SYSTEM_ROLES.TASK_EDIT);
+            baseGroupRole.add(SystemRoles.TASK_ROOT);
+            baseGroupRole.add(SystemRoles.TASK_GET);
+            baseGroupRole.add(SystemRoles.TASK_ADD);
+            baseGroupRole.add(SystemRoles.TASK_EDIT);
 
             // allow get task projects
-            baseGroupRole.add(SYSTEM_ROLES.TASK_PROJECT_GET);
-            baseGroupRole.add(SYSTEM_ROLES.TASK_PROJECT_ROOT);
+            baseGroupRole.add(SystemRoles.TASK_PROJECT_GET);
+            baseGroupRole.add(SystemRoles.TASK_PROJECT_ROOT);
 
             // to allow get background widgets
-            baseGroupRole.add(SYSTEM_ROLES.WIDGET_ROOT);
+            baseGroupRole.add(SystemRoles.WIDGET_ROOT);
 
             microserviceUserAccountGroup.create(baseGroup);
         }
@@ -77,18 +77,18 @@ public class CreateTestUserAccountsGroups {
             managersCRM.setName("Менеджеры в CRM");
 
             List<String> managersCRMRole = managersCRM.getGrantedRoles();
-            managersCRMRole.add(SYSTEM_ROLES.CUSTOMER_ROOT);
-            managersCRMRole.add(SYSTEM_ROLES.CUSTOMER_ADD);
-            managersCRMRole.add(SYSTEM_ROLES.CUSTOMER_EDIT);
+            managersCRMRole.add(SystemRoles.CUSTOMER_ROOT);
+            managersCRMRole.add(SystemRoles.CUSTOMER_ADD);
+            managersCRMRole.add(SystemRoles.CUSTOMER_EDIT);
 
-            managersCRMRole.add(SYSTEM_ROLES.PAYMENT_ROOT);
-            managersCRMRole.add(SYSTEM_ROLES.PAYMENT_ADD_CUSTOMER_DEAL);
-            managersCRMRole.add(SYSTEM_ROLES.PAYMENT_EDIT_CUSTOMER_DEALS);
-            managersCRMRole.add(SYSTEM_ROLES.PAYMENT_GET_CUSTOMER_DEALS);
+            managersCRMRole.add(SystemRoles.PAYMENT_ROOT);
+            managersCRMRole.add(SystemRoles.PAYMENT_ADD_CUSTOMER_DEAL);
+            managersCRMRole.add(SystemRoles.PAYMENT_EDIT_CUSTOMER_DEALS);
+            managersCRMRole.add(SystemRoles.PAYMENT_GET_CUSTOMER_DEALS);
 
             // to get sales funnel
-            managersCRMRole.add(SYSTEM_ROLES.LEAD_GEN_METHOD_ROOT);
-            managersCRMRole.add(SYSTEM_ROLES.LEAD_GEN_METHOD_GET_ALL);
+            managersCRMRole.add(SystemRoles.LEAD_GEN_METHOD_ROOT);
+            managersCRMRole.add(SystemRoles.LEAD_GEN_METHOD_GET_ALL);
 
             microserviceUserAccountGroup.create(managersCRM);
         }
@@ -98,8 +98,8 @@ public class CreateTestUserAccountsGroups {
             admin.setName("Администратор");
 
             List<String> adminRoles = admin.getGrantedRoles();
-            adminRoles.add(SYSTEM_ROLES.ROLE_ADMIN);
-            adminRoles.add(SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED);
+            adminRoles.add(SystemRoles.ROLE_ADMIN);
+            adminRoles.add(SystemRoles.ALLOW_ALL_DOMAIN_BASED);
 
             microserviceUserAccountGroup.create(admin);
         }
@@ -109,7 +109,7 @@ public class CreateTestUserAccountsGroups {
             admin.setName("Высшее руководство");
 
             List<String> adminRoles = admin.getGrantedRoles();
-            adminRoles.add(SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED);
+            adminRoles.add(SystemRoles.ALLOW_ALL_DOMAIN_BASED);
 
             microserviceUserAccountGroup.create(admin);
         }

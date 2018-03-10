@@ -7,7 +7,7 @@ package com.biqasoft.gateway.indicators.controllers;
 import com.biqasoft.common.exceptions.ThrowExceptionHelper;
 import com.biqasoft.entity.constants.DATE_CONSTS;
 import com.biqasoft.entity.constants.SYSTEM_FIELDS_CONST;
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.datasources.history.response.DataSourceIntegerAggregatedResponseFull;
 import com.biqasoft.entity.datasources.history.response.LeadGenAggregatedResponseFull;
 import com.biqasoft.entity.filters.CustomerFilter;
@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @Api(value = "KPIs")
-@Secured(value = {SYSTEM_ROLES.KPI_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.KPI_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/indicators")
 public class IndicatorsController {
@@ -55,7 +55,7 @@ public class IndicatorsController {
         this.kpIsPaymentsRepository = kpIsPaymentsRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.KPI_LEAD_GEN_METHOD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.KPI_LEAD_GEN_METHOD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get main KPIs of lead gen method or project")
     @RequestMapping(value = "filter/lead_gen_method/kpi", method = RequestMethod.POST)
     public LeadGenAggregatedResponseFull getAggregatedLeadGenKPIs(@RequestBody LeadGenKPIsFilter builder) {
@@ -80,7 +80,7 @@ public class IndicatorsController {
                 dateServiceRequestContext.parseDateExpression(builder.getStartDate()), dateServiceRequestContext.parseDateExpression(builder.getFinalDate()), builder);
     }
 
-    @Secured(value = {SYSTEM_ROLES.KPI_LEAD_GEN_METHOD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.KPI_LEAD_GEN_METHOD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get main KPIs of data source")
     @RequestMapping(value = "filter/data_source/kpi/integer", method = RequestMethod.POST)
     public DataSourceIntegerAggregatedResponseFull getAggregatedLeadGenKPIs(@RequestBody DataSourceKPIsFilter builder){
@@ -93,7 +93,7 @@ public class IndicatorsController {
                 dateServiceRequestContext.parseDateExpression(builder.getStartDate()), dateServiceRequestContext.parseDateExpression(builder.getFinalDate()), builder);
     }
 
-    @Secured(value = {SYSTEM_ROLES.KPI_TASK, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.KPI_TASK, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get main KPIs of tasks")
     @RequestMapping(value = "tasks/today", method = RequestMethod.GET)
     public List<DateGroupedStatisticsListEntity> getDateGroupedStatisticsListEntity() {
@@ -104,21 +104,21 @@ public class IndicatorsController {
         );
     }
 
-    @Secured(value = {SYSTEM_ROLES.KPI_SALES_MANAGER, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.KPI_SALES_MANAGER, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get created info of customer and leads by CustomerBuilder", notes = "no side affect")
     @RequestMapping(value = "manager/kpis/created_leads_and_customers", method = RequestMethod.POST)
     public List<ManagerCreatedCustomersEntity> getCustomerAndLeadsCreatedByManager(@RequestBody CustomerFilter customerCreatedBuilder) {
         return kpIsRepository.getCustomerAndLeadsCreatedByManager(customerCreatedBuilder);
     }
 
-    @Secured(value = {SYSTEM_ROLES.KPI_SALES_MANAGER, SYSTEM_ROLES.ROLE_SELLER_MOTIVATION_DESK, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.KPI_SALES_MANAGER, SystemRoles.ROLE_SELLER_MOTIVATION_DESK, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get payments by PaymentDealsBuilder. With motivation desk")
     @RequestMapping(value = "manager/payment/filter", method = RequestMethod.POST)
     public List<ManagerPaymentEntity> paymentDealsByManagers(@RequestBody PaymentDealsFilter paymentDealsBuilder) {
         return kpIsPaymentsRepository.getAllManagerPaymentDealsKPIs(paymentDealsBuilder);
     }
 
-    @Secured(value = {SYSTEM_ROLES.STATS_DOMAIN_BASIC, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.STATS_DOMAIN_BASIC, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @RequestMapping(value = "basic_stats", method = RequestMethod.GET)
     public BasicStatsDTO getBasicStats() {
         return domainStatisticsRepository.getBasicStats();

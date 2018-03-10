@@ -5,7 +5,7 @@
 package com.biqasoft.gateway.customer.controllers;
 
 import com.biqasoft.common.exceptions.ThrowExceptionHelper;
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.customer.Customer;
 import com.biqasoft.entity.format.BiqaPaginationResultList;
 import com.biqasoft.entity.filters.CustomerFilter;
@@ -33,7 +33,7 @@ import java.util.List;
 import static com.biqasoft.entity.constants.SYSTEM_CONSTS.EXCEL_MIME_TYPE;
 
 @RestController
-@Secured(value = {SYSTEM_ROLES.CUSTOMER_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.CUSTOMER_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @Api(value = "Customers & Leads ")
 @RequestMapping(value = "/v1/customer")
 public class CustomerController {
@@ -58,28 +58,28 @@ public class CustomerController {
         this.customerExcelRepository = customerExcelRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.CUSTOMER_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "Get all customers", notes = "get all customers, without any pagination. if you have a lot of customers, the response can be big ")
     @RequestMapping(method = RequestMethod.GET)
     public List<Customer> getAllCustomers() {
         return customerRepository.findAllCustomers();
     }
 
-    @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.CUSTOMER_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "Get all customers with pagination and filters", notes = "get all customers (or leads), according to filters and pagination limits")
     @RequestMapping(value = "filter", method = RequestMethod.POST)
     public BiqaPaginationResultList<Customer> getCustomerByFilter(@RequestBody CustomerFilter filter) {
         return customerFilterRequestContextService.getCustomersByFilter(filter);
     }
 
-    @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.CUSTOMER_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get one customer or lead by id ")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Customer getCustomerOrLeadById(HttpServletResponse response, @PathVariable("id") String id) {
         return customerRepository.findCustomerOrLeadByID(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.CUSTOMER_GET_ALL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.CUSTOMER_GET_ALL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get one customer or lead by id with deals, opportunities and tasks")
     @RequestMapping(value = "details/{id}", method = RequestMethod.GET)
     public CustomerDetails getDetailedCustomerOrLeadByIdDetails(@PathVariable("id") String id) {
@@ -96,7 +96,7 @@ public class CustomerController {
         return customerDetails;
     }
 
-    @Secured(value = {SYSTEM_ROLES.CUSTOMER_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.CUSTOMER_EDIT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update customer ", notes = "full updates customer or lead with all new data")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public Customer updateCustomer(@RequestBody Customer customer) {
@@ -104,7 +104,7 @@ public class CustomerController {
     }
 
     @ApiOperation(value = "add one new customer or lead")
-    @Secured(value = {SYSTEM_ROLES.CUSTOMER_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.CUSTOMER_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @RequestMapping(method = RequestMethod.POST)
     public Customer addNewCustomer(@RequestBody Customer customer, HttpServletResponse response) {
         customerRepository.addCustomer(customer);
@@ -112,7 +112,7 @@ public class CustomerController {
         return customer;
     }
 
-    @Secured({SYSTEM_ROLES.CUSTOMER_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured({SystemRoles.CUSTOMER_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "add list (array) of new customers or leads ",
             notes = "add new and update existing related on ID of customer")
     @RequestMapping(value = "list", method = RequestMethod.POST)
@@ -122,7 +122,7 @@ public class CustomerController {
         return customers;
     }
 
-    @Secured({SYSTEM_ROLES.CUSTOMER_DOWNLOAD_EXCEL, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured({SystemRoles.CUSTOMER_DOWNLOAD_EXCEL, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get customer in excel by criteria (builder)",
             notes = ", if you have a lot of customers, it can take up to 2 minutes")
     @RequestMapping(value = "filter/excel", method = RequestMethod.POST)
@@ -133,7 +133,7 @@ public class CustomerController {
         return new ResponseEntity<>(customerExcelRepository.getCustomerInEXCEL(customerBuilder), headers, HttpStatus.ACCEPTED);
     }
 
-//    @Secured(value = {SYSTEM_ROLES.CUSTOMER_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+//    @Secured(value = {SystemRoles.CUSTOMER_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 //    @ApiOperation(value = "parse XLSX to array of customers",
 //            notes = " . If you want to update already existing customer/lead you MUST specify customer ID," +
 //                    "otherwise, new customer/lead will be created ")

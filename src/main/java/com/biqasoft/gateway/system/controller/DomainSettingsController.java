@@ -5,7 +5,7 @@
 package com.biqasoft.gateway.system.controller;
 
 import com.biqasoft.audit.object.BiqaClassService;
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.core.BaseClass;
 import com.biqasoft.entity.core.Domain;
 import com.biqasoft.entity.core.DomainSettings;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Api(value = "Domain")
-@Secured(value = {SYSTEM_ROLES.DOMAIN_COMPANY_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.DOMAIN_COMPANY_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/domain_settings")
 public class DomainSettingsController {
@@ -44,7 +44,7 @@ public class DomainSettingsController {
         this.biqaClassService = biqaClassService;
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOMAIN_COMPANY_GET_BASIC, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOMAIN_COMPANY_GET_BASIC, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get my domain SETTINGS info")
     @RequestMapping(value = "my")
     public DomainSettings getMyDomainSettings() {
@@ -60,14 +60,14 @@ public class DomainSettingsController {
         return domainSetting;
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOMAIN_COMPANY_GET_BASIC, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOMAIN_COMPANY_GET_BASIC, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get my domain MAIN info")
     @RequestMapping(value = "info")
     public Domain getMyPrivateDomainInfo() {
         return microserviceDomain.findDomain();
     }
 
-    @Secured(value = {SYSTEM_ROLES.DOMAIN_COMPANY_UPDATE_SETTINGS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.DOMAIN_COMPANY_UPDATE_SETTINGS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update domain settings")
     @RequestMapping(method = RequestMethod.PUT)
     public DomainSettings updateDomainSettings(@RequestBody DomainSettingsRequestDTO domainSettingsRequest) {

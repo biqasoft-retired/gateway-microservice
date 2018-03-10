@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.admin;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.gateway.admin.dto.ExecuteDatabaseCommandRequestDTO;
 import com.biqasoft.gateway.admin.dto.ExecuteDatabaseCommandResultDTO;
 import com.biqasoft.gateway.system.dto.DataBaseCredentialsDao;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * Public API
  */
 @Api(value = "Domain admin", description = " High potential security endpoint. Allowed only for admin in domain.")
-@Secured(value = {SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/admin")
 public class AdminController {

@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.payments.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.customer.Opportunity;
 import com.biqasoft.entity.format.BiqaPaginationResultList;
 import com.biqasoft.entity.filters.OpportunityFilter;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "Opportunity")
-@Secured(value = {SYSTEM_ROLES.OPPORTUNITY_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.OPPORTUNITY_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/opportunity")
 public class OpportunityController {
@@ -32,35 +32,35 @@ public class OpportunityController {
         this.opportunityRepository = opportunityRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.OPPORTUNITY_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.OPPORTUNITY_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all opportunities")
     @RequestMapping(method = RequestMethod.GET)
     public List<Opportunity> getAllOpportunities() {
         return opportunityRepository.findAll();
     }
 
-    @Secured(value = {SYSTEM_ROLES.OPPORTUNITY_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.OPPORTUNITY_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all opportunities by customer or lead id")
     @RequestMapping(value = "common/all/customer_id/{id}", method = RequestMethod.GET)
     public List<Opportunity> findOpportunitiesByCustomerId(@PathVariable("id") String id) {
         return opportunityRepository.findOpportunitieByCustomerId(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.OPPORTUNITY_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.OPPORTUNITY_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get only active opportunities")
     @RequestMapping(value = "common/all/customer_id/{id}/active", method = RequestMethod.GET)
     public List<Opportunity> findOpportunitiesByCustomerIdAndActive(@PathVariable("id") String id) {
         return opportunityRepository.findAllActiveByCustomerId(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.OPPORTUNITY_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.OPPORTUNITY_EDIT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update current opportunity")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public Opportunity updateOpportunityById(@RequestBody Opportunity opportunity) {
         return opportunityRepository.updateOpportunity(opportunity);
     }
 
-    @Secured(value = {SYSTEM_ROLES.OPPORTUNITY_DELETE, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.OPPORTUNITY_DELETE, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "delete opportunity")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void deleteOpportunityById(HttpServletResponse response, @PathVariable("id") String id) {
@@ -68,14 +68,14 @@ public class OpportunityController {
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
-    @Secured(value = {SYSTEM_ROLES.OPPORTUNITY_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.OPPORTUNITY_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get one opportunity by ID")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Opportunity detailedOpportunityInfo(@PathVariable("id") String id) {
         return opportunityRepository.findOpportunityById(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.OPPORTUNITY_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.OPPORTUNITY_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "add new opportunity",
             notes = "leadGenMethod & project can be independent from customer but if you not specify - they will be get from customer info")
     @RequestMapping(method = RequestMethod.POST)
@@ -87,7 +87,7 @@ public class OpportunityController {
         return opportunity;
     }
 
-    @Secured(value = {SYSTEM_ROLES.OPPORTUNITY_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.OPPORTUNITY_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "add list of opportunities")
     @RequestMapping(value = "all", method = RequestMethod.POST)
     public List<Opportunity> getListOpportunities(@RequestBody List<Opportunity> opportunities, HttpServletResponse response) {
@@ -102,7 +102,7 @@ public class OpportunityController {
         return opportunityList;
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_GET_CUSTOMER_DEALS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_GET_CUSTOMER_DEALS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get opportunities  by filter (builder) ")
     @RequestMapping(value = "filter", method = RequestMethod.POST)
     public BiqaPaginationResultList<Opportunity> customerOpportunity(@RequestBody OpportunityFilter opportunityBuilder) {

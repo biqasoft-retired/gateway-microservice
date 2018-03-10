@@ -33,7 +33,7 @@ public class ConstantsService {
         classes.add(DOCUMENT_FILE.class);
         classes.add(SALES_FUNNEL.class);
         classes.add(SYSTEM_FIELDS_CONST.class);
-        classes.add(SYSTEM_ROLES.class);
+        classes.add(SystemRoles.class);
         classes.add(TOKEN_TYPES.class);
         classes.add(WIDGET_CONTROLLERS.class);
         classes.add(WIDGET_LOCATION.class);

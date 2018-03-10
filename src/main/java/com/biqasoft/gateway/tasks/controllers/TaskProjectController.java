@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.tasks.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.tasks.TaskProject;
 import com.biqasoft.gateway.tasks.repositories.TaskProjectRepository;
 import com.biqasoft.gateway.tasks.repositories.TaskRepository;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "Task project")
-@Secured(value = {SYSTEM_ROLES.TASK_PROJECT_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.TASK_PROJECT_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/task/project")
 public class TaskProjectController {
@@ -33,7 +33,7 @@ public class TaskProjectController {
         this.taskProjectRepository = taskProjectRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_PROJECT_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_PROJECT_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get task project by id")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public TaskProject findTaskProjectById(@PathVariable("id") String id) {
@@ -43,7 +43,7 @@ public class TaskProjectController {
         return taskProject;
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_PROJECT_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_PROJECT_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all tasks from some project id")
     @RequestMapping(value = "all/with_tasks", method = RequestMethod.GET)
     public List<TaskProject> getTaskProjcetWithTasks() {
@@ -56,14 +56,14 @@ public class TaskProjectController {
         return taskProjects;
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_PROJECT_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_PROJECT_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all task projects")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<TaskProject> findAllTaskProjects() {
         return taskProjectRepository.findAllTaskProjects();
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_PROJECT_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_PROJECT_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "add new task project")
     @RequestMapping(method = RequestMethod.POST)
     public TaskProject addNewTaskProject(@RequestBody TaskProject task, HttpServletResponse response) {
@@ -73,7 +73,7 @@ public class TaskProjectController {
         return task;
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_PROJECT_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_PROJECT_EDIT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update task project")
     @RequestMapping(method = RequestMethod.PUT)
     public TaskProject updateProject(@RequestBody TaskProject task, HttpServletResponse response) {
@@ -83,7 +83,7 @@ public class TaskProjectController {
         return taskProjectRepository.updateProject(task);
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_PROJECT_DELETE, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_PROJECT_DELETE, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "delete task project")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void updateProject(HttpServletResponse response, @PathVariable("id") String id) {

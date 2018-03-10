@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.tasks.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.tasks.TaskTemplate;
 import com.biqasoft.gateway.tasks.repositories.TaskTemplateRepository;
 import io.swagger.annotations.Api;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@Secured(value = {SYSTEM_ROLES.TASK_TEMPLATE_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.TASK_TEMPLATE_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @Api(value = "Segments - customers & leads ")
 @RequestMapping(value = "/v1/task/template")
 public class TaskTemplateController {
@@ -29,14 +29,14 @@ public class TaskTemplateController {
         this.taskRepository = taskRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_TEMPLATE_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_TEMPLATE_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all task templates ")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<TaskTemplate> findAllTaskTemplate() {
         return taskRepository.findAllTaskTemplate();
     }
 
-    @Secured(value = {SYSTEM_ROLES.TASK_TEMPLATE_GET, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_TEMPLATE_GET, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get task template by id ")
     @RequestMapping(value = "id/{id}", method = RequestMethod.GET)
     public TaskTemplate findTaskTemplateById(@PathVariable("id") String id) {
@@ -44,7 +44,7 @@ public class TaskTemplateController {
     }
 
     @ApiOperation(value = "add new task template")
-    @Secured(value = {SYSTEM_ROLES.TASK_TEMPLATE_ADD, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_TEMPLATE_ADD, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @RequestMapping(value = "", method = RequestMethod.POST)
     public TaskTemplate addTaskTemplate(@RequestBody TaskTemplate staticSegment, HttpServletResponse response) {
         taskRepository.addTaskTemplate(staticSegment);
@@ -53,7 +53,7 @@ public class TaskTemplateController {
     }
 
     @ApiOperation(value = "update task template")
-    @Secured(value = {SYSTEM_ROLES.TASK_TEMPLATE_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.TASK_TEMPLATE_EDIT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public TaskTemplate updateTaskTemplate(@RequestBody TaskTemplate staticSegment, HttpServletResponse response) {
         response.setStatus(HttpServletResponse.SC_CREATED);

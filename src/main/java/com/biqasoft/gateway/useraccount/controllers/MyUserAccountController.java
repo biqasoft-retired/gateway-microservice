@@ -4,11 +4,11 @@
 
 package com.biqasoft.gateway.useraccount.controllers;
 
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.gateway.useraccount.dto.OAuthNewTokenResponse;
 import com.biqasoft.common.exceptions.ThrowExceptionHelper;
 import com.biqasoft.entity.core.CurrentUser;
 import com.biqasoft.entity.dto.useraccount.UserNameWithPassword;
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
 import com.biqasoft.entity.core.useraccount.PersonalSettings;
 import com.biqasoft.entity.core.useraccount.UserAccount;
 import com.biqasoft.entity.core.useraccount.oauth2.OAuth2Application;
@@ -26,7 +26,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -132,7 +131,7 @@ public class MyUserAccountController {
         return response;
     }
 
-    @Secured(value = {SYSTEM_ROLES.UPDATE_MYACCOUNT, SYSTEM_ROLES.USER_ACCOUNT_EDIT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.UPDATE_MYACCOUNT, SystemRoles.USER_ACCOUNT_EDIT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update current user")
     @RequestMapping(method = RequestMethod.PUT)
     public UserAccount updateMyUserAccount(@RequestBody UserAccount userPosted){

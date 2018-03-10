@@ -4,7 +4,7 @@
 
 package com.biqasoft.gateway.payments.controllers;
 
-import com.biqasoft.entity.constants.SYSTEM_ROLES;
+import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.format.BiqaPaginationResultList;
 import com.biqasoft.entity.filters.CostsFilter;
 import com.biqasoft.entity.payments.CompanyCost;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Api(value = "Payment, Deals & Costs")
-@Secured(value = {SYSTEM_ROLES.PAYMENT_ROOT, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+@Secured(value = {SystemRoles.PAYMENT_ROOT, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
 @RestController
 @RequestMapping(value = "/v1/payments/company_cost")
 public class CompanyCostController {
@@ -31,28 +31,28 @@ public class CompanyCostController {
         this.paymentsRepository = paymentsRepository;
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_GET_CUSTOMER_DEALS, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_GET_CUSTOMER_DEALS, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all customer deals by sales project ID")
     @RequestMapping(value = "common/all/lead_gen_project_id/{id}", method = RequestMethod.GET)
     public  List<CompanyCost> getAllCompanyCostsByLeadGenProjectId(@PathVariable("id") String id) {
         return paymentsRepository.findAllCompanyCostByLeadGenProjectId(id);
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_GET_COMPANY_COST, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_GET_COMPANY_COST, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "get all company costs")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public  List<CompanyCost> getAllCompanyCosts() {
         return paymentsRepository.findAllCompanyCost();
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_EDIT_COMPANY_COST, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_EDIT_COMPANY_COST, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "update company cost")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public  CompanyCost updatedCompanyCost(@RequestBody CompanyCost customer) {
         return paymentsRepository.updateCompanyCost(customer);
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_ADD_COMPANY_COST, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_ADD_COMPANY_COST, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "add new company cost")
     @RequestMapping(value = "", method = RequestMethod.POST)
     public CompanyCost addNewCompanyCost(@RequestBody CompanyCost customer, HttpServletResponse response) {
@@ -62,7 +62,7 @@ public class CompanyCostController {
         return customer;
     }
 
-    @Secured(value = {SYSTEM_ROLES.PAYMENT_GET_COMPANY_COST, SYSTEM_ROLES.ALLOW_ALL_DOMAIN_BASED, SYSTEM_ROLES.ROLE_ADMIN})
+    @Secured(value = {SystemRoles.PAYMENT_GET_COMPANY_COST, SystemRoles.ALLOW_ALL_DOMAIN_BASED, SystemRoles.ROLE_ADMIN})
     @ApiOperation(value = "costs by filter (builder) ")
     @RequestMapping(value = "filter", method = RequestMethod.POST)
     public  BiqaPaginationResultList<CompanyCost> costsBuilder(@RequestBody CostsFilter costsBuilder) {

@@ -8,7 +8,7 @@ import com.biqasoft.gateway.leadgen.repositories.LeadGenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.biqasoft.entity.datasources.SavedLeadGenKPI;
-import com.biqasoft.entity.indicators.dto.IndicatorsDTO;
+import com.biqasoft.entity.datasources.IndicatorsDTO;
 
 @Service
 public class KPIsLeadGenMethodRepository {

@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.biqasoft.gateway.useraccount.dto.ResetPasswordTokenDTO;
 import com.biqasoft.entity.tasks.Task;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 
 import java.io.IOException;
 import java.util.HashMap;

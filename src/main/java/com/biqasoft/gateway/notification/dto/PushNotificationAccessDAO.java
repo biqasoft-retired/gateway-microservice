@@ -7,7 +7,7 @@ package com.biqasoft.gateway.notification.dto;
 import com.biqasoft.entity.core.BaseClass;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 
 @Document
 public class PushNotificationAccessDAO extends BaseClass {

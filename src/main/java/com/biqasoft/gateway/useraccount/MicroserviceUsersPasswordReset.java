@@ -2,7 +2,7 @@ package com.biqasoft.gateway.useraccount;
 
 import com.biqasoft.gateway.useraccount.dto.ResetPasswordTokenDTO;
 import com.biqasoft.entity.dto.useraccount.PasswordResetDTO;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 import com.biqasoft.microservice.communicator.interfaceimpl.annotation.MicroMapping;
 
 import com.biqasoft.microservice.communicator.interfaceimpl.annotation.Microservice;

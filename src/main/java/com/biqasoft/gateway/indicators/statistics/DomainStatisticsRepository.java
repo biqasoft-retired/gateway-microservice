@@ -8,7 +8,7 @@ import com.biqasoft.entity.customer.Opportunity;
 import com.biqasoft.entity.filters.*;
 import com.biqasoft.entity.payments.CompanyCost;
 import com.biqasoft.entity.payments.CustomerDeal;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 import com.biqasoft.gateway.analytics.repositories.AnalyticsRepository;
 import com.biqasoft.gateway.customer.repositories.CompanyRepository;
 import com.biqasoft.gateway.customer.repositories.CustomerFilterRequestContextService;

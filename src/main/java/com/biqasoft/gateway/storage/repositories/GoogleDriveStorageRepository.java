@@ -8,7 +8,7 @@ import com.biqasoft.entity.constants.TOKEN_TYPES;
 import com.biqasoft.entity.core.CreatedInfo;
 import com.biqasoft.entity.core.CurrentUser;
 import com.biqasoft.entity.core.Domain;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 import com.biqasoft.entity.system.ExternalServiceToken;
 import com.biqasoft.gateway.externalservice.ExternalServiceTokenRepository;
 import com.biqasoft.gateway.storage.dto.GoogleOauthResponseToken;

@@ -4,9 +4,10 @@
 
 package com.biqasoft.gateway.indicators.repositories;
 
-import com.biqasoft.entity.core.CurrentUser;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.auth.CurrentUserContextProvider;
+import com.biqasoft.auth.core.UserAccount;
 import com.biqasoft.entity.customer.Customer;
+import com.biqasoft.entity.datasources.IndicatorsDTO;
 import com.biqasoft.entity.datasources.SavedDataSource;
 import com.biqasoft.entity.datasources.SavedLeadGenKPI;
 import com.biqasoft.entity.datasources.history.response.DataSourceAggregatedResponse;
@@ -16,11 +17,10 @@ import com.biqasoft.entity.datasources.history.response.LeadGenAggregatedRespons
 import com.biqasoft.entity.filters.CustomerFilter;
 import com.biqasoft.entity.filters.DataSourceKPIsFilter;
 import com.biqasoft.entity.filters.LeadGenKPIsFilter;
-import com.biqasoft.entity.indicators.dto.DateGrouped;
-import com.biqasoft.entity.indicators.dto.DateGroupedStatisticsListEntity;
-import com.biqasoft.entity.indicators.dto.IndicatorsDTO;
-import com.biqasoft.entity.indicators.dto.ManagerCreatedCustomersEntity;
 import com.biqasoft.entity.tasks.Task;
+import com.biqasoft.gateway.indicators.ManagerCreatedCustomersEntity;
+import com.biqasoft.gateway.indicators.dto.DateGrouped;
+import com.biqasoft.gateway.indicators.dto.DateGroupedStatisticsListEntity;
 import com.biqasoft.gateway.leadgen.repositories.LeadGenRepository;
 import com.biqasoft.microservice.common.MicroserviceUsersRepository;
 import com.biqasoft.microservice.database.TenantDatabase;
@@ -44,13 +44,11 @@ public class KPIsRepository {
 
     private final MongoOperations ops;
     private final MicroserviceUsersRepository microserviceUsersRepository;
-    private final CurrentUser currentUser;
     private final BiqaObjectFilterService biqaObjectFilterService;
     private final LeadGenRepository leadRepository;
 
     @Autowired
-    public KPIsRepository(CurrentUser currentUser, LeadGenRepository leadRepository, @TenantDatabase MongoOperations ops, BiqaObjectFilterService biqaObjectFilterService, MicroserviceUsersRepository microserviceUsersRepository) {
-        this.currentUser = currentUser;
+    public KPIsRepository(LeadGenRepository leadRepository, @TenantDatabase MongoOperations ops, BiqaObjectFilterService biqaObjectFilterService, MicroserviceUsersRepository microserviceUsersRepository) {
         this.leadRepository = leadRepository;
         this.ops = ops;
         this.biqaObjectFilterService = biqaObjectFilterService;
@@ -237,7 +235,7 @@ public class KPIsRepository {
         return hashMap;
     }
 
-    public List<DateGroupedStatisticsListEntity> getGroupedTasksByDay(List<Task> allTasks, Date startDate, Date finalDate) {
+    public List<DateGroupedStatisticsListEntity> getGroupedTasksByDay(List<Task> allTasks, Date startDate, Date finalDate, CurrentUserContextProvider currentUser) {
         Map<DateGrouped, List<Task>> hashMap = getGroupedTasksByDayMapWithNullDays(allTasks, startDate, finalDate);
 
         List<DateGroupedStatisticsListEntity> groupedStatisticsListEntities = new ArrayList<>();
@@ -252,7 +250,7 @@ public class KPIsRepository {
             dateGroupedStatisticsListEntity.getDateGroupedStatistics().setDoneTasks((int) (long) currentElement.getValue().stream().filter(p -> p.isCompleted()).count());
 
             dateGroupedStatisticsListEntity.getDateGroupedStatistics().setCreatedTask((int) (long) currentElement.getValue().stream()
-                    .filter(p -> !p.getCreatedInfo().getCreatedById().equals(currentUser.getCurrentUser().getId())).count());
+                    .filter(p -> !p.getCreatedInfo().getCreatedById().equals(currentUser.getUserAccount().getId())).count());
 
             groupedStatisticsListEntities.add(dateGroupedStatisticsListEntity);
         }

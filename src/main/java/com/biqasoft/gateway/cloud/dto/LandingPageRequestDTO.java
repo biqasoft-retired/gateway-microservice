@@ -5,7 +5,7 @@
 package com.biqasoft.gateway.cloud.dto;
 
 import io.swagger.annotations.ApiModelProperty;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 
 import java.io.Serializable;
 

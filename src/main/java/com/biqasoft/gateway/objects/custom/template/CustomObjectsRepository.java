@@ -6,6 +6,7 @@ package com.biqasoft.gateway.objects.custom.template;
 
 import com.biqasoft.audit.object.customfield.CustomFieldProcessingService;
 import com.biqasoft.audit.object.customfield.CustomObjectUtils;
+import com.biqasoft.auth.CurrentUserContextProvider;
 import com.biqasoft.entity.annotations.BiqaAddObject;
 import com.biqasoft.entity.annotations.BiqaAuditObject;
 import com.biqasoft.entity.constants.CUSTOM_OBJECTS_PRINTABLE_TYPES;
@@ -119,13 +120,14 @@ public class CustomObjectsRepository {
     }
 
     @BiqaAuditObject
-    public CustomObjectTemplate updateCustomObject(CustomObjectTemplate customer) {
+    public CustomObjectTemplate updateCustomObject(CustomObjectTemplate customer, CurrentUserContextProvider currentUser) {
         CustomObjectTemplate oldTemplate = findCustomObjectById(customer.getId());
 
         customFieldProcessingRepository.processFields(
                 oldTemplate.getCustomFields(),
                 customer.getCustomFields(),
-                CustomObjectUtils.CUSTOM_OBJECT_COLLECTION_PREFIX + customer.getCollectionId()
+                CustomObjectUtils.CUSTOM_OBJECT_COLLECTION_PREFIX + customer.getCollectionId(),
+                currentUser
         );
 
         ops.save(customer);

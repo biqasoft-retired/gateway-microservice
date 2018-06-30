@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.biqasoft.entity.core.Domain;
 import com.biqasoft.entity.core.DomainSettings;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 import com.biqasoft.entity.core.CurrentUser;
 
 import java.util.Date;

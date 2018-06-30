@@ -4,12 +4,12 @@
 
 package com.biqasoft.gateway.indicators.repositories;
 
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.auth.core.UserAccount;
 import com.biqasoft.entity.customer.Customer;
 import com.biqasoft.entity.filters.PaymentDealsFilter;
-import com.biqasoft.entity.indicators.dto.ManagerPaymentEntity;
 import com.biqasoft.entity.payments.CustomerDeal;
 import com.biqasoft.gateway.customer.repositories.CustomerRepository;
+import com.biqasoft.gateway.indicators.dto.ManagerPaymentEntity;
 import com.biqasoft.microservice.common.MicroserviceUsersRepository;
 import com.biqasoft.microservice.database.TenantDatabase;
 import com.biqasoft.persistence.base.BiqaObjectFilterService;
@@ -20,10 +20,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -98,7 +95,7 @@ public class KPIsPaymentsRepository {
 
         if (paymentDealsBuilder.isSortByDealsAmount()) {
             managerPaymentEntities = Lists.reverse(
-                    managerPaymentEntities.stream().sorted((object1, object2) -> Double.compare(object1.getAllDealsAmount().doubleValue(), object2.getAllDealsAmount().doubleValue()))
+                    managerPaymentEntities.stream().sorted(Comparator.comparingDouble(object -> object.getAllDealsAmount().doubleValue()))
                             .collect(Collectors.toList())
             );
         }
@@ -107,7 +104,7 @@ public class KPIsPaymentsRepository {
             if (entity.getCustomerDeals().size() == 0) continue;
 
             CustomerDeal latestDeal = Lists.reverse(
-                    entity.getCustomerDeals().stream().sorted((obj1, obj2) -> obj1.getCreatedInfo().getCreatedDate().compareTo(obj2.getCreatedInfo().getCreatedDate())).collect(Collectors.toList())
+                    entity.getCustomerDeals().stream().sorted(Comparator.comparing(obj -> obj.getCreatedInfo().getCreatedDate())).collect(Collectors.toList())
             ).get(0);
 
             entity.setLatestDealDate(latestDeal.getCreatedInfo().getCreatedDate());

@@ -1,6 +1,6 @@
 package com.biqasoft.gateway.useraccount;
 
-import com.biqasoft.entity.core.useraccount.UserAccountGroup;
+import com.biqasoft.users.domain.useraccount.UserAccountGroup;
 import com.biqasoft.microservice.communicator.interfaceimpl.annotation.MicroMapping;
 import com.biqasoft.microservice.communicator.interfaceimpl.annotation.MicroPathVar;
 import com.biqasoft.microservice.communicator.interfaceimpl.annotation.Microservice;

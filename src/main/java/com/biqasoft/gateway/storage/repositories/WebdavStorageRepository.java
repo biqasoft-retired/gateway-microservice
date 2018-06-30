@@ -17,7 +17,7 @@ import com.biqasoft.entity.constants.TOKEN_TYPES;
 import com.biqasoft.storage.entity.StorageFile;
 import com.biqasoft.entity.core.CreatedInfo;
 import com.biqasoft.entity.system.ExternalServiceToken;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 import com.biqasoft.storage.StorageFileRepository;
 import org.springframework.util.StringUtils;
 

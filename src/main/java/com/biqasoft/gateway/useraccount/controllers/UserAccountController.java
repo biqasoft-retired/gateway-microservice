@@ -7,7 +7,7 @@ package com.biqasoft.gateway.useraccount.controllers;
 import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.dto.useraccount.PasswordResetDTO;
 import com.biqasoft.entity.dto.useraccount.UserRegisterRequest;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 import com.biqasoft.gateway.useraccount.MicroserviceUsersPasswordReset;
 import com.biqasoft.microservice.common.MicroserviceUsersRepository;
 import io.swagger.annotations.Api;

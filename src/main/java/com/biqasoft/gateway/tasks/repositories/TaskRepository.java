@@ -8,7 +8,7 @@ import com.biqasoft.common.exceptions.ThrowExceptionHelper;
 import com.biqasoft.entity.annotations.BiqaAddObject;
 import com.biqasoft.entity.annotations.BiqaAuditObject;
 import com.biqasoft.entity.core.CurrentUser;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 import com.biqasoft.entity.filters.TaskFilter;
 import com.biqasoft.entity.format.BiqaPaginationResultList;
 import com.biqasoft.entity.tasks.Task;

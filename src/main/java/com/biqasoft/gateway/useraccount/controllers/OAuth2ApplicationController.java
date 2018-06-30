@@ -7,7 +7,7 @@ package com.biqasoft.gateway.useraccount.controllers;
 import com.biqasoft.entity.constants.SystemRoles;
 import com.biqasoft.entity.core.CurrentUser;
 import com.biqasoft.entity.dto.httpresponse.SampleDataResponse;
-import com.biqasoft.entity.core.useraccount.oauth2.OAuth2Application;
+import com.biqasoft.users.domain.useraccount.oauth2.OAuth2Application;
 import com.biqasoft.microservice.common.MicroserviceOAuth2Applications;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

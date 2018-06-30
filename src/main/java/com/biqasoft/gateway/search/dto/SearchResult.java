@@ -11,7 +11,7 @@ import com.biqasoft.entity.datasources.DataSource;
 import com.biqasoft.storage.entity.StorageFile;
 import com.biqasoft.entity.dto.httpresponse.CustomObjectSearchResult;
 import com.biqasoft.entity.tasks.Task;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 
 import java.io.Serializable;
 import java.util.ArrayList;

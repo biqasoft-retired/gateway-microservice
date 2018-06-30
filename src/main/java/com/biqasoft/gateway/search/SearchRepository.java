@@ -28,7 +28,7 @@ import com.biqasoft.entity.dto.httpresponse.CustomObjectSearchResultNode;
 import com.biqasoft.entity.core.objects.CustomObjectData;
 import com.biqasoft.entity.objects.CustomObjectTemplate;
 import com.biqasoft.entity.tasks.Task;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 
 import java.util.HashMap;
 import java.util.List;

@@ -6,7 +6,7 @@ package com.biqasoft.gateway.objects.custom.data;
 
 import com.biqasoft.entity.constants.CUSTOM_FIELD_TYPES;
 import com.biqasoft.entity.core.objects.CustomField;
-import com.biqasoft.entity.core.useraccount.UserAccount;
+import com.biqasoft.users.domain.useraccount.UserAccount;
 import com.biqasoft.microservice.common.MicroserviceUsersRepository;
 import com.biqasoft.microservice.i18n.MessageByLocaleService;
 import com.fasterxml.jackson.databind.ObjectMapper;

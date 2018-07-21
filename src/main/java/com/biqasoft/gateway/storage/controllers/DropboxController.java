@@ -9,7 +9,6 @@ import com.biqasoft.entity.constants.TOKEN_TYPES;
 import com.biqasoft.entity.dto.httpresponse.LinkFieldDataResponse;
 import com.biqasoft.entity.system.ExternalServiceToken;
 import com.biqasoft.gateway.storage.repositories.DropboxStorageRepository;
-import com.biqasoft.gateway.externalservice.ExternalServiceTokenRepository;
 import com.dropbox.core.DbxAuthFinish;
 import com.dropbox.core.DbxClient;
 import com.dropbox.core.DbxException;

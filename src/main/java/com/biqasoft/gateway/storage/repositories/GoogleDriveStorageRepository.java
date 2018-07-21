@@ -10,7 +10,6 @@ import com.biqasoft.entity.core.CurrentUser;
 import com.biqasoft.entity.core.Domain;
 import com.biqasoft.users.domain.useraccount.UserAccount;
 import com.biqasoft.entity.system.ExternalServiceToken;
-import com.biqasoft.gateway.externalservice.ExternalServiceTokenRepository;
 import com.biqasoft.gateway.storage.dto.GoogleOauthResponseToken;
 import com.biqasoft.microservice.communicator.http.HttpClientsHelpers;
 import com.biqasoft.storage.DefaultStorageService;
@@ -235,100 +234,6 @@ public class GoogleDriveStorageRepository implements StorageFileRepository {
         return null;
     }
 
-    public ExternalServiceToken obtainCodeToToken(String code) {
-        MultiValueMap<String, String> form = new LinkedMultiValueMap<String, String>();
-
-        form.add("code", code);
-        form.add("client_id", googleDriveClientId);
-        form.add("client_secret", googleDriveClientSecret);
-        form.add("redirect_uri", googleDriveRedirectURI);
-        form.add("grant_type", "authorization_code");
-
-        RestTemplate template = HttpClientsHelpers.getRestTemplate();
-
-        GoogleOauthResponseToken re = template.postForObject(GOOGLE_DRIVE_TOKEN_URI, form, GoogleOauthResponseToken.class);
-
-        ExternalServiceToken externalServiceToken = new ExternalServiceToken();
-        externalServiceToken.setType(TOKEN_TYPES.GOOGLE_DRIVE);
-        externalServiceToken.setToken(re.getAccess_token());
-        externalServiceToken.setRefreshToken(re.getRefresh_token());
-
-        DateTime dateTime = new DateTime(new Date());
-        dateTime.plusSeconds(re.getExpires_in());
-        // google token have expires
-        externalServiceToken.setExpired(dateTime.toDate());
-
-        Drive drive = getDriveClient(externalServiceToken, true);
-
-        try {
-            externalServiceToken.setName(drive.about().get().execute().getName());
-            externalServiceToken.setLogin(drive.about().get().execute().getUser().getEmailAddress());
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-
-        ExternalServiceToken existingTokenWithSameLogin = externalServiceTokenRepository.findExternalServiceTokenByLoginAndTypeIgnoreExpired(externalServiceToken.getLogin(), TOKEN_TYPES.GOOGLE_DRIVE);
-
-        // if we DON'T already have user with the same login
-        // add new token
-        if (existingTokenWithSameLogin == null) {
-            externalServiceTokenRepository.addExternalServiceToken(externalServiceToken);
-        } else {
-            // if we have token with current user
-            // but we have new refresh token
-            // we would update our token info
-            if (re.getRefresh_token() != null && !re.getRefresh_token().equals("")) {
-                externalServiceToken.setId(existingTokenWithSameLogin.getId());
-                externalServiceToken.setDomain(existingTokenWithSameLogin.getDomain());
-                externalServiceToken.setCreatedInfo(new CreatedInfo(new Date(), currentUser.getCurrentUser().getId()));
-                externalServiceTokenRepository.updateExternalServiceToken(externalServiceToken);
-            } else {
-                // we already have this user, but have not
-                // refresh token - bad situation
-                // which should not be...
-            }
-        }
-        // otherwise
-        // if we have not refresh token from google
-        // and we already have user with this login
-        // we would not do anything
-
-        return externalServiceToken;
-    }
-
-    /**
-     * See more at
-     * <p>
-     * {@code https://developers.google.com/identity/protocols/OAuth2WebServer}
-     * {@code https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=ya29.wwGA_WB3GbyB4P6ExslSRMh5Ae6ObXyWmVBPK_pLSAj7NpXFg9h3OFDPhcRVY3_drhYy}
-     */
-    private ExternalServiceToken refreshAccessCodeFromRefreshToken(ExternalServiceToken externalServiceToken) {
-        // this is only for google token
-        if (!externalServiceToken.getType().equals(TOKEN_TYPES.GOOGLE_DRIVE)) return null;
-        // this method is only update, not create new
-        if (externalServiceTokenRepository.findExternalServiceTokenByIdIgnoreExpired(externalServiceToken.getId()) == null)
-            return null;
-
-        MultiValueMap<String, String> form = new LinkedMultiValueMap<String, String>();
-
-        form.add("refresh_token", externalServiceToken.getRefreshToken());
-        form.add("client_id", googleDriveClientId);
-        form.add("client_secret", googleDriveClientSecret);
-        form.add("grant_type", "refresh_token");
-
-        RestTemplate template = HttpClientsHelpers.getRestTemplate();
-        GoogleOauthResponseToken re = template.postForObject(GOOGLE_DRIVE_TOKEN_URI, form, GoogleOauthResponseToken.class);
-
-        externalServiceToken.setToken(re.getAccess_token());
-
-        DateTime dateTime = new DateTime(new Date());
-        dateTime = dateTime.plusSeconds(re.getExpires_in());
-        externalServiceToken.setExpired(dateTime.toDate());
-
-        externalServiceTokenRepository.updateExternalServiceToken(externalServiceToken);
-
-        return externalServiceToken;
-    }
 
     private static Set<String> onlyExport;
 

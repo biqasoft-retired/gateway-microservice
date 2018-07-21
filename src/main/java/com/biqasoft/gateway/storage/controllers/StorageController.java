@@ -12,7 +12,6 @@ import com.biqasoft.entity.dto.httpresponse.SampleDataResponse;
 import com.biqasoft.entity.filters.StorageFileFilter;
 import com.biqasoft.entity.format.BiqaPaginationResultList;
 import com.biqasoft.entity.system.ExternalServiceToken;
-import com.biqasoft.gateway.externalservice.ExternalServiceTokenRepository;
 import com.biqasoft.gateway.storage.repositories.StorageUserRepository;
 import com.biqasoft.storage.DefaultStorageService;
 import com.biqasoft.storage.entity.StorageFile;

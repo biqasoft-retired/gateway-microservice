@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.biqasoft</groupId>
         <artifactId>base</artifactId>
-        <version>2018.7.0</version>
+        <version>2018.7.0-SNAPSHOT</version>
     </parent>
 
     <dependencies>

@@ -12,7 +12,6 @@ import com.biqasoft.entity.core.DomainSettings;
 import com.biqasoft.entity.system.ExternalServiceToken;
 import com.biqasoft.gateway.customer.repositories.CustomerRepository;
 import com.biqasoft.gateway.tasks.repositories.TaskRepository;
-import com.biqasoft.gateway.externalservice.ExternalServiceTokenRepository;
 import com.biqasoft.common.exceptions.ThrowExceptionHelper;
 import com.biqasoft.storage.DefaultStorageService;
 import com.biqasoft.storage.StorageFileRepository;
